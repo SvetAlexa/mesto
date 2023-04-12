@@ -1,0 +1,12 @@
+.element__likes {
+    margin-right: 5px;
+    display: block;
+    object-fit: cover;
+    object-position: center;
+    cursor: pointer;
+    transition: .3s ease-in-out;
+}
+
+.element__likes:hover {
+    opacity: .5;
+}

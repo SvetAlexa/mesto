@@ -1,0 +1,10 @@
+.footer__container {
+    padding-bottom: 60px;
+    box-sizing: border-box;
+}
+
+@media screen and (max-width: 940px) {
+    .footer__container {
+        padding-left: 27px;
+    }
+}
