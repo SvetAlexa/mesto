@@ -8,8 +8,14 @@
 
 @media screen and (max-width: 940px) {
     .profile {
-        max-width: 581px;
+        width: 88.12vw;
         flex-direction: column;
         align-items: center;
+    }
+}
+
+@media screen and (max-width: 940px) {
+    .profile {
+   gap: 0;
     }
 }

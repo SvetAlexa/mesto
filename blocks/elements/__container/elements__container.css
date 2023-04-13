@@ -1,4 +1,21 @@
 .elements__container {
     padding-top: 50px;
     padding-bottom: 66px;
+    box-sizing: border-box;
 }
+
+@media screen and (max-width: 940px) {
+    .elements__container {
+       padding-left: 27px;
+       padding-right: 27px;
+    }
+ }
+
+ @media screen and (max-width: 600px) {
+    .elements__container {
+       padding-left: 0;
+       padding-right: 0;
+       padding-top: 36px;
+       padding-bottom: 48px;
+    }
+ }

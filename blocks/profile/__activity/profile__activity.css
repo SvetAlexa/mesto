@@ -6,3 +6,11 @@
     font-style: normal;
     line-height: 1.22;
 }
+
+@media screen and (max-width: 600px) {
+    .profile__activity {
+      font-size: 14px;
+      line-height: 1.21;
+      text-align: center;
+    }
+ }

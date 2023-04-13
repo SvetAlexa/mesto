@@ -9,3 +9,10 @@
         padding-left: 27px;
     }
 }
+
+@media screen and (max-width: 600px) {
+    .header__container {
+        padding-top: 28px;
+        padding-bottom: 31.6px;
+    }
+}
