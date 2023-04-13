@@ -11,11 +11,18 @@
     }
  }
 
- @media screen and (max-width: 600px) {
+ @media screen and (max-width: 640px) {
     .elements__container {
-       padding-left: 0;
-       padding-right: 0;
+       padding-left: 19px;
+       padding-right: 19px;
        padding-top: 36px;
        padding-bottom: 48px;
     }
  }
+
+ @media screen and (max-width: 400px) {
+   .elements__container {
+      padding-left: 0;
+      padding-right: 0;
+   }
+}
