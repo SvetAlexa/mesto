@@ -10,3 +10,11 @@
     align-items: center;
     position: relative;
 }
+
+
+@media screen and (max-width: 640px) {
+    .popup__container {
+        max-width: 282px;
+        padding: 25px 22px;
+    }
+}

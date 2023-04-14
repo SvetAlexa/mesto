@@ -1,9 +1,16 @@
 .popup__input-list {
     margin: 0;
     padding: 0;
+    width: 100%;
     display: flex;
     flex-direction: column;
     list-style: none;
     gap: 30px;
     margin-bottom: 48px;
+}
+
+@media screen and (max-width: 640px) {
+    .popup__input-list {
+        margin-bottom: 45px;
+    }
 }

@@ -13,8 +13,8 @@
 
  @media screen and (max-width: 640px) {
     .elements__container {
-       padding-left: 19px;
-       padding-right: 19px;
+       padding-left: 22px;
+       padding-right: 22px;
        padding-top: 36px;
        padding-bottom: 48px;
     }
