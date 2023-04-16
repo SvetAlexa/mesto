@@ -5,7 +5,7 @@
     background-image: url(../../../images/Like.png);
     background-repeat: no-repeat;
     background-position: center;
-  
+
     cursor: pointer;
     transition: .3s ease-in-out;
 }

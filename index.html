@@ -11,60 +11,60 @@
 
 <body>
     <div class="page">
-        <header class="header header__container">
+        <header class="header page__container-header">
             <img class="header__logo" src="./images/logo.svg" alt="логотип Место Россия">
         </header>
         <div class="main">
-            <section class="profile profile__container">
+            <section class="profile page__container-profile">
                 <img class="profile__avatar" src="./images/avatar.jpg" alt="фотография профиля">
                 <div class="profile__info">
                     <div class="profile__name-container">
-                        <h2 class="profile__name">Жак-Ив Кусто</h2>
+                        <h1 class="profile__name">Жак-Ив Кусто</h1>
                         <button class="profile__edit-button"></button>
                     </div>
                     <p class="profile__activity">Исследователь океана</p>
                 </div>
                 <button class="profile__add-button"></button>
             </section>
-            <section class="elements elements__container">
+            <section class="elements page__container-elements">
                 <ul class="elements__lists">
                     <li class="element">
-                        <img class="element__image" src="./images/Karachaevsk.jpg" alt="">
+                        <img class="element__image" src="./images/Karachaevsk.jpg" alt="Сентинский храм Карачаево-Черкесия">
                         <div class="element__title-container">
                             <h2 class="element__title">Карачаево-Черкесия</h2>
                             <div class="element__likes"></div>
                         </div>
                     </li>
                     <li class="element">
-                        <img class="element__image" src="./images/Elbrus-mountain.jpg" alt="">
+                        <img class="element__image" src="./images/Elbrus-mountain.jpg" alt="Гора Эльбрус">
                         <div class="element__title-container">
                             <h2 class="element__title">Гора Эльбрус</h2>
                             <div class="element__likes"></div>
                         </div>
                     </li>
                     <li class="element">
-                        <img class="element__image" src="./images/Dombai.jpg" alt="">
+                        <img class="element__image" src="./images/Dombai.jpg" alt="Гора Белалакая Домбай">
                         <div class="element__title-container">
                             <h2 class="element__title">Домбай</h2>
                             <div class="element__likes"></div>
                         </div>
                     </li>
                     <li class="element">
-                        <img class="element__image" src="./images/Sihote-Alin Primorie.jpg" alt="">
+                        <img class="element__image" src="./images/Sihote-Alin-Primorie.jpg" alt="Горные гряды Сихотэ-Алинь Приморский край">
                         <div class="element__title-container">
                             <h2 class="element__title">Сихотэ-Алинь</h2>
                             <div class="element__likes"></div>
                         </div>
                     </li>
                     <li class="element">
-                        <img class="element__image" src="./images/Sylakskij kanion Dagestan.jpg" alt="">
+                        <img class="element__image" src="./images/Sylakskij-kanion-Dagestan.jpg" alt="Сулакский каньон Дагестан">
                         <div class="element__title-container">
                             <h2 class="element__title">Сулакский каньон</h2>
                             <div class="element__likes"></div>
                         </div>
                     </li>
                     <li class="element">
-                        <img class="element__image" src="./images/Chechkish Altai.jpg" alt="">
+                        <img class="element__image" src="./images/Chechkish-Altai.jpg" alt="Ущелье урочище Чечкыш Алтай">
                         <div class="element__title-container">
                             <h2 class="element__title">Чечкыш</h2>
                             <div class="element__likes"></div>
@@ -73,7 +73,7 @@
                 </ul>
             </section>
         </div>
-        <footer class="footer footer__container">
+        <footer class="footer page__container-footer">
             <p class="footer__copyright" lang="en"> &copy; 2020 Mesto Russia</p>
         </footer>
         <div class="popup">
@@ -82,13 +82,15 @@
                 <h2 class="popup__title">Редактировать профиль</h2>
                 <ul class="popup__input-list">
                     <li class="popup__input-item">
-                        <input type="text" name="name" placeholder="Жак-Ив Кусто" class="popup__input popup__input_value_name">
+                        <input type="text" name="name" placeholder="Жак-Ив Кусто" required
+                            class="popup__input popup__input_value_name">
                     </li>
                     <li>
-                        <input type="text" name="activity" placeholder="Исследователь океана" class="popup__input popup__input_value_activity">
+                        <input type="text" name="activity" placeholder="Исследователь океана" required
+                            class="popup__input popup__input_value_activity">
                     </li>
                 </ul>
-                <button type="submit" name="submit" value="submit" class="popup__button">Сохранить</button>
+                <button type="submit" name="submit" value="submit" class="popup__button-sumbit">Сохранить</button>
             </form>
         </div>
     </div>

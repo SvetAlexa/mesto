@@ -1,4 +1,4 @@
-.popup__button {
+.popup__button-sumbit {
     padding: 0;
     border: none;
     background-color: #000;
@@ -16,12 +16,12 @@
     transition: .3s ease-in-out;
 }
 
-.popup__button:hover {
+.popup__button-sumbit:hover {
     background-color: rgba(0, 0, 0, .8);
 }
 
 @media screen and (max-width: 640px) {
-    .popup__button {
+    .popup__button-sumbit {
         width: 238px;
         min-height: 46px;
         font-size: 14px;

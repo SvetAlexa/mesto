@@ -6,7 +6,7 @@
     background-color: #000;
     border: 1px solid #fff;
     box-sizing: border-box;
-    background-image: url(../../../images/Edit-button_pencil.svg);
+    background-image: url(../../../images/Edit-button-pencil.svg);
     background-repeat: no-repeat;
     background-position: center;
     cursor: pointer;
@@ -19,8 +19,8 @@
 
 @media screen and (max-width: 640px) {
     .profile__edit-button {
-       max-width: 18px;
-       height: 18px;
-       align-self: center;
+        max-width: 18px;
+        height: 18px;
+        align-self: center;
     }
 }
