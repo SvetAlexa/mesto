@@ -9,14 +9,14 @@ let formElement = document.querySelector('.popup__container');
 let nameInput = formElement.querySelector('.popup__input_value_name');
 let jobInput = formElement.querySelector('.popup__input_value_activity');
 
-//открываем popup, заполняем поля формы значениями из профиля
+//открытие popup
 const openPopup = function () {
     popupElement.classList.add('popup_is-opened');
-    nameInput.value = profileName.textContent;
+    nameInput.value = profileName.textContent; //заполняем поля формы значениями из профиля
     jobInput.value = profileJob.textContent;
 };
 
-//закрываем popup
+//закрытие popup
 const closePopup = function () {
     popupElement.classList.remove('popup_is-opened');
 };
@@ -25,10 +25,10 @@ const closePopup = function () {
 popupOpenButtomElement.addEventListener('click', openPopup);
 popupCloseButtonElement.addEventListener('click', closePopup);
 
-//обработчик "отправки" формы, заполняем профиль новыми значениями из полей формы
+//обработчик "отправки" формы,
 function handleFormSubmit(evt) {
     evt.preventDefault(); //отменяем стандартную отправку формы
-    profileName.textContent = nameInput.value;
+    profileName.textContent = nameInput.value; //заполняем профиль новыми значениями из полей формы
     profileJob.textContent = jobInput.value;
     closePopup();
 }
