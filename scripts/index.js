@@ -33,6 +33,7 @@ const createCard = (card) => {
 
     li.querySelector('.element__image').src = card.link;
     li.querySelector('.element__title').textContent = card.name;
+
     initialCardsContainer.append(li);
     return li;
 };
