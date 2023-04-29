@@ -28,52 +28,6 @@
             </section>
             <section class="elements page__container-elements">
                 <ul class="elements__lists">
-                    <li class="element">
-                        <img class="element__image" src="./images/Karachaevsk.jpg"
-                            alt="Сентинский храм Карачаево-Черкесия">
-                        <div class="element__title-container">
-                            <h2 class="element__title">Карачаево-Черкесия</h2>
-                            <button type="button" class="element__likes"></button>
-                        </div>
-                    </li>
-                    <li class="element">
-                        <img class="element__image" src="./images/Elbrus-mountain.jpg" alt="Гора Эльбрус">
-                        <div class="element__title-container">
-                            <h2 class="element__title">Гора Эльбрус</h2>
-                            <button type="button" class="element__likes"></button>
-                        </div>
-                    </li>
-                    <li class="element">
-                        <img class="element__image" src="./images/Dombai.jpg" alt="Гора Белалакая Домбай">
-                        <div class="element__title-container">
-                            <h2 class="element__title">Домбай</h2>
-                            <button type="button" class="element__likes"></button>
-                        </div>
-                    </li>
-                    <li class="element">
-                        <img class="element__image" src="./images/Sihote-Alin-Primorie.jpg"
-                            alt="Горные гряды Сихотэ-Алинь Приморский край">
-                        <div class="element__title-container">
-                            <h2 class="element__title">Сихотэ-Алинь</h2>
-                            <button type="button" class="element__likes"></button>
-                        </div>
-                    </li>
-                    <li class="element">
-                        <img class="element__image" src="./images/Sylakskij-kanion-Dagestan.jpg"
-                            alt="Сулакский каньон Дагестан">
-                        <div class="element__title-container">
-                            <h2 class="element__title">Сулакский каньон</h2>
-                            <button type="button" class="element__likes"></button>
-                        </div>
-                    </li>
-                    <li class="element">
-                        <img class="element__image" src="./images/Chechkish-Altai.jpg"
-                            alt="Ущелье урочище Чечкыш Алтай">
-                        <div class="element__title-container">
-                            <h2 class="element__title">Чечкыш</h2>
-                            <button type="button" class="element__likes"></button>
-                        </div>
-                    </li>
                 </ul>
             </section>
         </main>
@@ -100,7 +54,20 @@
             </div>
         </div>
     </div>
+
+    <template id="element-item-template">
+        <li class="element">
+            <img class="element__image" src="./images/Karachaevsk.jpg"
+                alt="">
+            <div class="element__title-container">
+                <h2 class="element__title"></h2>
+                <button type="button" class="element__likes"></button>
+            </div>
+        </li>
+    </template>
+
     <script src="./scripts/index.js" defer></script>
+
 </body>
 
 </html>

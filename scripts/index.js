@@ -1,3 +1,38 @@
+const initialCards = [
+    {
+        link: 'https://unsplash.com/photos/ec3QSoInblM',
+        name: 'Сихотэ-Алинь Приморский край',
+    },
+    {
+        link: 'https://unsplash.com/photos/1PXSA5d4208',
+        name: 'Сулакский каньон Дагестан',
+    },
+    {
+        link: 'https://unsplash.com/photos/wGA5ktslkfc',
+        name: 'Чечкыш (Долина горных духов) Горный Алтай',
+    },
+    {
+        link: 'https://unsplash.com/photos/XdZCa1M2m9o',
+        name: 'Байкал',
+    },
+    {
+        link: 'https://unsplash.com/photos/sCLNmLYemfA',
+        name: 'Домбай Ущелье Аманауз',
+    },
+    {
+        link: 'https://unsplash.com/photos/bW-ig06IfAg',
+        name: 'Карачаево-Черкесия Сентинский храм ',
+    },
+];
+
+const itemsContainer = document.querySelector('.elements__lists');
+
+
+
+
+
+
+
 const popupElement = document.querySelector('.popup');
 const popupCloseButtonElement = popupElement.querySelector('.popup__close-button');
 const popupOpenButtomElement = document.querySelector('.profile__edit-button');
