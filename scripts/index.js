@@ -26,21 +26,108 @@ const initialCards = [
 ];
 
 const initialCardsContainer = document.querySelector('.elements__lists');
+
+const addNewCardForm = document.querySelector('.popup__form_type_new-card');
+const editProfileInfoForm = document.querySelector('.popup__form_type_edit');
+
+const titleInput = addNewCardForm.querySelector('.popup__input_value_title');
+const linkInput = addNewCardForm.querySelector('.popup__input_value_link');
 const template = document.querySelector('#element-item-template');
 
-const createCard = (card) => {
-    const li = template.content.querySelector('.element').cloneNode(true);
+const popupNewCard = document.querySelector('.popup_type_new-card');
 
-    li.querySelector('.element__image').src = card.link;
-    li.querySelector('.element__title').textContent = card.name;
 
-    initialCardsContainer.append(li);
-    return li;
+
+const popupOpenButtonNewCard = document.querySelector('.profile__add-button');
+const popupOpenButtonEdit = document.querySelector('.profile__edit-button');
+
+const popupCloseButton = document.querySelectorAll('.popup__close-button');
+
+const createNewCard = (name, link) => {
+    const li = template.content
+        .querySelector('.element').cloneNode(true); //копируем элемент li со всем сожержимым
+
+    const textTitleElement = li.querySelector('.element__title'); //находим заголовок карточки
+    textTitleElement.textContent = name; //записываем аргумент name в заголовок карточки
+
+    const urlLinkElement = li.querySelector('.element__image'); //находим картинку карточки
+    urlLinkElement.src = link; //записываем аргумент link в адрес картинки карточки
+
+    li.querySelector('.element__delete').addEventListener('click', () => { //"слушатель" кнопки удалить
+        li.remove();                                                       //при нажатии удаляем весь элемент li
+    });
+    return li; //возвращаем значение функции создания новой карточки
 };
 
-const listCards = initialCards.map(card => {
-    const cardElement = createCard(card);
-    return cardElement;
+const listCards = initialCards.map((card) => { //для каждого элемента массива "из коробки"  
+    const name = card.name; //записываем значение заголовка из массива в аргумент name
+    const link = card.link; //записываем значение ссылки из массива в аргумент link
+
+    const cardElement = createNewCard(name, link); //создаем карточку
+
+    return cardElement; //возвращаем значение функции - готовый элемент каждой карточки "из коробки" 
+});
+
+const renderNewCard = (name, link) => { //функция отрисовки новой карточки на странице
+    initialCardsContainer.prepend(createNewCard(name, link)); //вставляем новую карточку в начало списка ul
+};
+
+initialCardsContainer.append(...listCards); //вставляем в конец списка ul каждую карточку из массива "из коробки"
+
+const handleFormSubmitNewCard = (evt) => { //обработчик "отправки" формы создания новой карточки
+    evt.preventDefault(); //отменяем стандартную отправку формы
+    const name = titleInput.value; //записываем значения поля заголовка в аргумент name
+    const link = linkInput.value;  //записываем значения поля ccskrb в аргумент link
+    renderNewCard(name, link); //запускаем функцию создания новой карточки с полученными аргументами
+    closePopup(popupNewCard); //закрываем окно формы
+}
+
+addNewCardForm.addEventListener('submit', handleFormSubmitNewCard); //слушатель события "отправки" формы addNewCardForm 
+
+const openPopup = (popup) => { //универсальная функция открытия popup 
+    popup.classList.add('popup_is-opened');
+};
+
+const closePopup = (popup) => { //универсальная функция закрытия popup 
+    popup.classList.remove('popup_is-opened');
+};
+
+
+popupCloseButton.forEach((item) => {  //закрытие по крестику любого popup на странице
+    item.addEventListener('click', () =>
+        document.querySelectorAll('.popup').forEach((item) => {
+            item.classList.remove('popup_is-opened');
+        }));
+});
+
+popupOpenButtonNewCard.addEventListener('click', function (evt) { //слушатель события кнопки добавления новой карточки
+    openPopup(popupNewCard); //открываем popup добавления новой карточки
+    titleInput.value = ''; //очищаем поля формы от ранее введенных значений
+    linkInput.value = '';
+  });
+
+popupOpenButtonEdit.addEventListener('click', function (evt) { //слушатель события кнопки редактирования данных профиля
+    const popupEdit = document.querySelector('.popup_type_edit'); //находим popup редактирования данных профиля
+    openPopup(popupEdit); //открываем popup редактирования данных профиля
+
+    let profileName = document.querySelector('.profile__name'); //определяем переменные для заполнения данных в профиле на странице
+    let profileJob = document.querySelector('.profile__activity');
+
+    let nameInput = editProfileInfoForm.querySelector('.popup__input_value_name'); //определяем переменные для введенных значений (данных)
+    let jobInput = editProfileInfoForm.querySelector('.popup__input_value_activity'); //профиля в поля формы editProfileInfoForm
+
+    nameInput.value = profileName.textContent; //заполняем поля формы значениями из профиля
+    jobInput.value = profileJob.textContent;
+
+    function handleFormSubmitEdit(evt) { //обработчик "отправки" формы editProfileInfoForm
+        evt.preventDefault(); //отменяем стандартную отправку формы
+        profileName.textContent = nameInput.value; //заполняем профиль на странице новыми значениями из полей формы
+        profileJob.textContent = jobInput.value;
+        closePopup(popupEdit); //закрываем окно формы
+    }
+
+    editProfileInfoForm.addEventListener('submit', handleFormSubmitEdit); //слушатель события "отправки" формы editProfileInfoForm
+
 });
 
 
@@ -48,43 +135,16 @@ const listCards = initialCards.map(card => {
 
 
 
+  
 
 
 
-const popupElement = document.querySelector('.popup');
-const popupCloseButtonElement = popupElement.querySelector('.popup__close-button');
-const popupOpenButtomElement = document.querySelector('.profile__edit-button');
 
-let profileName = document.querySelector('.profile__name');
-let profileJob = document.querySelector('.profile__activity');
 
-let formElement = document.querySelector('.popup__container');
-let nameInput = formElement.querySelector('.popup__input_value_name');
-let jobInput = formElement.querySelector('.popup__input_value_activity');
 
-//открытие popup
-const openPopup = function () {
-    popupElement.classList.add('popup_is-opened');
-    nameInput.value = profileName.textContent; //заполняем поля формы значениями из профиля
-    jobInput.value = profileJob.textContent;
-};
 
-//закрытие popup
-const closePopup = function () {
-    popupElement.classList.remove('popup_is-opened');
-};
 
-//обработчики событий открытия и закрытия popup
-popupOpenButtomElement.addEventListener('click', openPopup);
-popupCloseButtonElement.addEventListener('click', closePopup);
 
-//обработчик "отправки" формы,
-function handleFormSubmit(evt) {
-    evt.preventDefault(); //отменяем стандартную отправку формы
-    profileName.textContent = nameInput.value; //заполняем профиль новыми значениями из полей формы
-    profileJob.textContent = jobInput.value;
-    closePopup();
-}
 
-//обработчик события "отправки" формы
-formElement.addEventListener('submit', handleFormSubmit);
+
+
