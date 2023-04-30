@@ -36,8 +36,6 @@ const template = document.querySelector('#element-item-template');
 
 const popupNewCard = document.querySelector('.popup_type_new-card');
 
-
-
 const popupOpenButtonNewCard = document.querySelector('.profile__add-button');
 const popupOpenButtonEdit = document.querySelector('.profile__edit-button');
 
@@ -84,6 +82,16 @@ const handleFormSubmitNewCard = (evt) => { //обработчик "отправ�
 
 addNewCardForm.addEventListener('submit', handleFormSubmitNewCard); //слушатель события "отправки" формы addNewCardForm 
 
+const addRemoveLike = (evt) => {
+    const likeButton = evt.target;
+    console.log(likeButton);
+    if (likeButton.classList.contains('element__likes')) {
+        likeButton.closest('.element__likes').classList.toggle('element__likes_is_active');
+    };
+}
+
+initialCardsContainer.addEventListener('click', addRemoveLike);
+
 const openPopup = (popup) => { //универсальная функция открытия popup 
     popup.classList.add('popup_is-opened');
 };
@@ -104,7 +112,7 @@ popupOpenButtonNewCard.addEventListener('click', function (evt) { //слушат
     openPopup(popupNewCard); //открываем popup добавления новой карточки
     titleInput.value = ''; //очищаем поля формы от ранее введенных значений
     linkInput.value = '';
-  });
+});
 
 popupOpenButtonEdit.addEventListener('click', function (evt) { //слушатель события кнопки редактирования данных профиля
     const popupEdit = document.querySelector('.popup_type_edit'); //находим popup редактирования данных профиля
@@ -127,7 +135,6 @@ popupOpenButtonEdit.addEventListener('click', function (evt) { //слушате�
     }
 
     editProfileInfoForm.addEventListener('submit', handleFormSubmitEdit); //слушатель события "отправки" формы editProfileInfoForm
-
 });
 
 
@@ -135,7 +142,9 @@ popupOpenButtonEdit.addEventListener('click', function (evt) { //слушате�
 
 
 
-  
+
+
+
 
 
 
