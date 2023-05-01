@@ -39,7 +39,6 @@ const popupOpenImage = document.querySelector('.popup_type_image');
 
 const popupOpenButtonNewCard = document.querySelector('.profile__add-button');
 const popupOpenButtonEdit = document.querySelector('.profile__edit-button');
-const popupOpenButtonImage = document.querySelector('.element__image');
 
 const popupCloseButton = document.querySelectorAll('.popup__close-button');
 
@@ -56,6 +55,13 @@ const createNewCard = (name, link) => {
     li.querySelector('.element__delete').addEventListener('click', () => { //"слушатель" кнопки удалить
         li.remove();                                                       //при нажатии удаляем весь элемент li
     });
+
+    li.querySelector('.element__image').addEventListener('click', () => {
+        document.querySelector('.popup__image').src = urlLinkElement.src;
+        document.querySelector('.popup__caption').textContent = textTitleElement.textContent;
+        openPopup(popupOpenImage);
+    });
+
     return li; //возвращаем значение функции создания новой карточки
 };
 
@@ -137,17 +143,6 @@ popupOpenButtonEdit.addEventListener('click', function (evt) { //слушате�
 
     editProfileInfoForm.addEventListener('submit', handleFormSubmitEdit); //слушатель события "отправки" формы editProfileInfoForm
 });
-
-const openImage = (evt) => {
-    const openImageButton = evt.target;
-    if (openImageButton.classList.contains('element__image')) {
-        openPopup(popupOpenImage);
-    };
-}
-
-initialCardsContainer.addEventListener('click', openImage);
-
-
 
 
 
