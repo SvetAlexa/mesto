@@ -49,17 +49,17 @@ const createNewCard = (name, link) => {
 
     const titleElement = li.querySelector('.element__title');
     const imageElement = li.querySelector('.element__image');
-    
+
     titleElement.textContent = name;
     imageElement.alt = name;
     imageElement.src = link;
 
     li.querySelector('.element__delete').addEventListener('click', () => {
-        li.remove();                                                      
+        li.remove();
     });
 
     imageElement.addEventListener('click', () => {
-        document.querySelector('.popup__image').src = imageElement.src;  
+        document.querySelector('.popup__image').src = imageElement.src;
         document.querySelector('.popup__caption').textContent = titleElement.textContent;
         openPopup(popupOpenImage);
     });
@@ -67,7 +67,7 @@ const createNewCard = (name, link) => {
     return li;
 };
 
-const listCards = initialCards.map((card) => {  
+const listCards = initialCards.map((card) => {
     const name = card.name;
     const link = card.link;
 
@@ -78,7 +78,7 @@ const listCards = initialCards.map((card) => {
 
 initialCardsContainer.append(...listCards);
 
-const renderNewCard = (name, link) => { 
+const renderNewCard = (name, link) => {
     initialCardsContainer.prepend(createNewCard(name, link));
 };
 
@@ -125,11 +125,11 @@ buttonAddNewCard.addEventListener('click', function (evt) {
 buttonEditProfileInfo.addEventListener('click', function (evt) {
     openPopup(popupProfileInfo);
 
-    let profileName = document.querySelector('.profile__name');
-    let profileJob = document.querySelector('.profile__activity');
+    const profileName = document.querySelector('.profile__name');
+    const profileJob = document.querySelector('.profile__activity');
 
-    let nameInput = formPopupProfileInfo.querySelector('.popup__input_value_name');
-    let jobInput = formPopupProfileInfo.querySelector('.popup__input_value_activity');
+    const nameInput = formPopupProfileInfo.querySelector('.popup__input_value_name');
+    const jobInput = formPopupProfileInfo.querySelector('.popup__input_value_activity');
 
     nameInput.value = profileName.textContent;
     jobInput.value = profileJob.textContent;
