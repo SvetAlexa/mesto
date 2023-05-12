@@ -3,6 +3,7 @@ const initialCardsContainer = document.querySelector('.elements__lists');
 const popupNewCard = document.querySelector('.popup_type_new-card');
 const popupProfileInfo = document.querySelector('.popup_type_edit');
 const popupOpenImage = document.querySelector('.popup_type_image');
+const popups = document.querySelectorAll('.popup');
 
 const formPopupNewCard = document.querySelector('.popup__form_type_new-card');
 const formPopupProfileInfo = document.querySelector('.popup__form_type_edit');
@@ -87,18 +88,21 @@ buttonsClosePopup.forEach((item) => {
     });
 });
 
-//слушатель Escape
+//закрытие попапов кнопкой esc
 document.addEventListener('keydown', (evt) => {
     const key = evt.key;
-    const currentPopup = document.querySelectorAll('.popup'); //вынести в глобальную область видимости
-
-    currentPopup.forEach((item) => {
-        if (key === 'Escape' && item.classList.contains('popup_is-opened')) {
-            console.log('функция срабатывает');
-            console.log(evt.target);
-            console.log(item);
+    popups.forEach((item) => {
+        if (key == 'Escape' && item.classList.contains('popup_is-opened')) {
             closePopup(item);
         }
+    });
+});
+
+//закрытие попапов кликом на overlay
+popups.forEach((item) => {
+    item.addEventListener('click', (evt) => {
+        if (evt.target !== evt.currentTarget) return;
+        closePopup(item);
     });
 });
 
