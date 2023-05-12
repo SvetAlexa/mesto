@@ -87,6 +87,21 @@ buttonsClosePopup.forEach((item) => {
     });
 });
 
+//слушатель Escape
+document.addEventListener('keydown', (evt) => {
+    const key = evt.key;
+    const currentPopup = document.querySelectorAll('.popup'); //вынести в глобальную область видимости
+
+    currentPopup.forEach((item) => {
+        if (key === 'Escape' && item.classList.contains('popup_is-opened')) {
+            console.log('функция срабатывает');
+            console.log(evt.target);
+            console.log(item);
+            closePopup(item);
+        }
+    });
+});
+
 const handleFormSubmitNewCard = (evt) => {
     evt.preventDefault();
     const name = titleInput.value;
