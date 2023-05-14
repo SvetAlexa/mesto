@@ -75,10 +75,14 @@ const renderNewCard = (name, link) => {
 
 const openPopup = (popup) => {
     popup.classList.add('popup_is-opened');
+    document.addEventListener('keydown', closePopupByEsc);
+    popup.addEventListener('click', closePopupByOverlay);
 };
 
 const closePopup = (popup) => {
     popup.classList.remove('popup_is-opened');
+    document.removeEventListener('keydown', closePopupByEsc);
+    popup.removeEventListener('click', closePopupByOverlay);
 };
 
 buttonsClosePopup.forEach((item) => {
@@ -88,23 +92,42 @@ buttonsClosePopup.forEach((item) => {
     });
 });
 
-//закрытие попапов кнопкой esc
-document.addEventListener('keydown', (evt) => {
+const closePopupByEsc = (evt) => {
     const key = evt.key;
     popups.forEach((item) => {
         if (key == 'Escape' && item.classList.contains('popup_is-opened')) {
             closePopup(item);
         }
     });
-});
+}
 
-//закрытие попапов кликом на overlay
-popups.forEach((item) => {
-    item.addEventListener('click', (evt) => {
-        if (evt.target !== evt.currentTarget) return;
-        closePopup(item);
+const closePopupByOverlay = (evt) => {
+    popups.forEach((item) => {
+        if (evt.target === evt.currentTarget && item.classList.contains('popup_is-opened')) {
+            closePopup(item);
+        }
     });
-});
+};
+
+
+
+//закрытие попапов кнопкой esc
+// document.addEventListener('keydown', (evt) => {
+//     const key = evt.key;
+//     popups.forEach((item) => {
+//         if (key == 'Escape' && item.classList.contains('popup_is-opened')) {
+//             closePopup(item);
+//         }
+//     });
+// });
+
+// //закрытие попапов кликом на overlay
+// popups.forEach((item) => {
+//     item.addEventListener('click', (evt) => {
+//         if (evt.target !== evt.currentTarget) return;
+//         closePopup(item);
+//     });
+// });
 
 const handleFormSubmitNewCard = (evt) => {
     evt.preventDefault();
