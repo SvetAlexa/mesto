@@ -30,11 +30,8 @@ const toggleButtonStatus = function (buttonElement, status) {
 };
 
 const checkInputValidity = function (inputElement, formElement) {
-    console.log(inputElement.validity);
-    console.log(inputElement.validationMessage);
     const inputValidity = inputElement.validity.valid;
     const errorElement = formElement.querySelector(`#${inputElement.name}-error`);
-    console.log(errorElement);
 
     if (!errorElement) return;
 
@@ -43,8 +40,6 @@ const checkInputValidity = function (inputElement, formElement) {
     } else {
         deleteError(inputElement, errorElement);
     }
-
-
 }
 
 const setEventListener = function (formElement) {
@@ -52,17 +47,16 @@ const setEventListener = function (formElement) {
     const submitButtonElement = formElement.querySelector('.popup__button-sumbit');
 
     toggleButtonStatus(submitButtonElement, formElement.checkValidity());
-    console.log(formElement.checkValidity());
 
-    formElement.addEventListener('submit', (evt) => {
-        evt.preventDefault();
-        console.log('отправлено');
-    });
+    // formElement.addEventListener('submit', (evt) => {
+    //     evt.preventDefault();
+    //     console.log('отправлено');
+    // });
 
     inputsList.forEach((inputItem) => {
         inputItem.addEventListener('input', () => {
-            checkInputValidity(inputItem, formElement);
             toggleButtonStatus(submitButtonElement, formElement.checkValidity());
+            checkInputValidity(inputItem, formElement);
         })
     });
 

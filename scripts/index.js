@@ -20,6 +20,8 @@ const profileJob = document.querySelector('.profile__activity');
 const buttonAddNewCard = document.querySelector('.profile__add-button');
 const buttonEditProfileInfo = document.querySelector('.profile__edit-button');
 
+const buttonFormSave = document.querySelector('.popup__button-sumbit_save');
+
 const buttonsClosePopup = document.querySelectorAll('.popup__close-button');
 
 const template = document.querySelector('#element-item-template');
@@ -113,7 +115,8 @@ const handleFormSubmitNewCard = (evt) => {
     const name = titleInput.value;
     const link = linkInput.value;
     renderNewCard(name, link);
-    console.log('ФОРМА УСПЕШНО ОТПРАВЛЕНА');
+    setValidation();
+    console.log('форма отправлена');
     closePopup(popupNewCard);
 };
 
@@ -129,13 +132,15 @@ buttonEditProfileInfo.addEventListener('click', function (evt) {
     openPopup(popupProfileInfo);
     nameInput.value = profileName.textContent;
     jobInput.value = profileJob.textContent;
+    toggleButtonStatus(buttonFormSave, true);
 });
 
 function handleFormSubmitEdit(evt) {
     evt.preventDefault();
     profileName.textContent = nameInput.value;
     profileJob.textContent = jobInput.value;
-    console.log('ФОРМА УСПЕШНО ОТПРАВЛЕНА');
+    setValidation();
+    console.log('форма отправлена');
     closePopup(popupProfileInfo);
 };
 
