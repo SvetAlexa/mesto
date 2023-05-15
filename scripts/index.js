@@ -28,8 +28,7 @@ const imagePopup = document.querySelector('.popup__image');
 const titlePopup = document.querySelector('.popup__caption');
 
 const createNewCard = (name, link) => {
-    const li = template.content
-        .querySelector('.element').cloneNode(true);
+    const li = template.content.querySelector('.element').cloneNode(true);
 
     const titleElement = li.querySelector('.element__title');
     const imageElement = li.querySelector('.element__image');
@@ -109,31 +108,12 @@ const closePopupByOverlay = (evt) => {
     });
 };
 
-
-
-//закрытие попапов кнопкой esc
-// document.addEventListener('keydown', (evt) => {
-//     const key = evt.key;
-//     popups.forEach((item) => {
-//         if (key == 'Escape' && item.classList.contains('popup_is-opened')) {
-//             closePopup(item);
-//         }
-//     });
-// });
-
-// //закрытие попапов кликом на overlay
-// popups.forEach((item) => {
-//     item.addEventListener('click', (evt) => {
-//         if (evt.target !== evt.currentTarget) return;
-//         closePopup(item);
-//     });
-// });
-
 const handleFormSubmitNewCard = (evt) => {
     evt.preventDefault();
     const name = titleInput.value;
     const link = linkInput.value;
     renderNewCard(name, link);
+    console.log('ФОРМА УСПЕШНО ОТПРАВЛЕНА');
     closePopup(popupNewCard);
 };
 
@@ -155,6 +135,7 @@ function handleFormSubmitEdit(evt) {
     evt.preventDefault();
     profileName.textContent = nameInput.value;
     profileJob.textContent = jobInput.value;
+    console.log('ФОРМА УСПЕШНО ОТПРАВЛЕНА');
     closePopup(popupProfileInfo);
 };
 
