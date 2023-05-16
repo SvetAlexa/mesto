@@ -78,12 +78,14 @@ const openPopup = (popup) => {
     popup.classList.add('popup_is-opened');
     document.addEventListener('keydown', closePopupByEsc);
     popup.addEventListener('click', closePopupByOverlay);
+    cleanErrorMessage();
 };
 
 const closePopup = (popup) => {
     popup.classList.remove('popup_is-opened');
     document.removeEventListener('keydown', closePopupByEsc);
     popup.removeEventListener('click', closePopupByOverlay);
+
 };
 
 buttonsClosePopup.forEach((item) => {
@@ -116,7 +118,6 @@ const handleFormSubmitNewCard = (evt) => {
     const link = linkInput.value;
     renderNewCard(name, link);
     setValidation();
-    console.log('форма отправлена');
     closePopup(popupNewCard);
 };
 
@@ -140,7 +141,6 @@ function handleFormSubmitEdit(evt) {
     profileName.textContent = nameInput.value;
     profileJob.textContent = jobInput.value;
     setValidation();
-    console.log('форма отправлена');
     closePopup(popupProfileInfo);
 };
 

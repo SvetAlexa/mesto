@@ -1,5 +1,5 @@
 
-
+const formsList = document.querySelectorAll('.popup__form');
 
 const addError = function (inputElement, errorElement) {
     inputElement.classList.add('popup__input_is-invalid');
@@ -40,30 +40,41 @@ const checkInputValidity = function (inputElement, formElement) {
     } else {
         deleteError(inputElement, errorElement);
     }
-}
+};
+
+const cleanErrorMessage = function () {
+    formsList.forEach((i) => {
+        if (i.parentElement.parentElement.classList.contains('popup_is-opened')) {
+            const errorsList = i.querySelectorAll('.error');
+            const inputsList = i.querySelectorAll('.popup__input');
+
+            errorsList.forEach((item) => {
+                item.textContent = '';
+            });
+
+            inputsList.forEach((item) => {
+                item.classList.remove('popup__input_is-invalid');
+            });   
+        };
+    });
+};
 
 const setEventListener = function (formElement) {
-    const inputsList = formElement.querySelectorAll('.popup__input');
+    const inputsList = document.querySelectorAll('.popup__input');
     const submitButtonElement = formElement.querySelector('.popup__button-sumbit');
 
     toggleButtonStatus(submitButtonElement, formElement.checkValidity());
-
-    // formElement.addEventListener('submit', (evt) => {
-    //     evt.preventDefault();
-    //     console.log('отправлено');
-    // });
 
     inputsList.forEach((inputItem) => {
         inputItem.addEventListener('input', () => {
             toggleButtonStatus(submitButtonElement, formElement.checkValidity());
             checkInputValidity(inputItem, formElement);
-        })
+        });
     });
 
 };
 
 const setValidation = function () {
-    const formsList = document.querySelectorAll('.popup__form');
     formsList.forEach((formItem) => {
         setEventListener(formItem)
     });
