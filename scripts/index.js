@@ -78,7 +78,7 @@ const openPopup = (popup) => {
     popup.classList.add('popup_is-opened');
     document.addEventListener('keydown', closePopupByEsc);
     popup.addEventListener('click', closePopupByOverlay);
-    cleanErrorMessage();
+    cleanErrorMessage(popup, configFormSelector);
 };
 
 const closePopup = (popup) => {
@@ -117,8 +117,9 @@ const handleFormSubmitNewCard = (evt) => {
     const name = titleInput.value;
     const link = linkInput.value;
     renderNewCard(name, link);
-    setValidation();
+    enableValidation(configFormSelector);
     closePopup(popupNewCard);
+    console.log('ФОРМА ОТПРАВЛЕНА')
 };
 
 formPopupNewCard.addEventListener('submit', handleFormSubmitNewCard);
@@ -133,14 +134,15 @@ buttonEditProfileInfo.addEventListener('click', function (evt) {
     openPopup(popupProfileInfo);
     nameInput.value = profileName.textContent;
     jobInput.value = profileJob.textContent;
-    toggleButtonStatus(buttonFormSave, true);
+    toggleButtonStatus(buttonFormSave, true, configFormSelector);
 });
 
 function handleFormSubmitEdit(evt) {
     evt.preventDefault();
     profileName.textContent = nameInput.value;
     profileJob.textContent = jobInput.value;
-    setValidation();
+    enableValidation(configFormSelector);
+    console.log('ФОРМА ОТПРАВЛЕНА')
     closePopup(popupProfileInfo);
 };
 
