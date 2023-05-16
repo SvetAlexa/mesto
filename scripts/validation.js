@@ -50,11 +50,7 @@ const checkInputValidity = function (inputElement, formElement, config) {
 };
 
 const cleanErrorMessage = function (popup, config) {
-    console.log(popup)
-    if (!popup.querySelector('.popup__form')) {
-        console.log('не тот попап')
-        return
-    }
+    if (!popup.querySelector('.popup__form')) return
 
     const errorsList = popup.querySelectorAll(config.errorClass);
     const inputsList = popup.querySelectorAll(config.inputSelector);
@@ -63,16 +59,10 @@ const cleanErrorMessage = function (popup, config) {
         item.textContent = '';
     });
 
-    console.log(errorsList)
-    console.log(inputsList)
-
     inputsList.forEach((item) => {
         item.classList.remove(config.inputErrorClass);
     });
-
-    console.log('очистились ошибки')
 };
-
 
 const setEventListener = function (formElement, config) {
     const inputsList = formElement.querySelectorAll(config.inputSelector);

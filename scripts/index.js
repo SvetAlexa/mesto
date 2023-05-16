@@ -85,7 +85,6 @@ const closePopup = (popup) => {
     popup.classList.remove('popup_is-opened');
     document.removeEventListener('keydown', closePopupByEsc);
     popup.removeEventListener('click', closePopupByOverlay);
-
 };
 
 buttonsClosePopup.forEach((item) => {
@@ -119,7 +118,6 @@ const handleFormSubmitNewCard = (evt) => {
     renderNewCard(name, link);
     enableValidation(configFormSelector);
     closePopup(popupNewCard);
-    console.log('ФОРМА ОТПРАВЛЕНА')
 };
 
 formPopupNewCard.addEventListener('submit', handleFormSubmitNewCard);
@@ -142,7 +140,6 @@ function handleFormSubmitEdit(evt) {
     profileName.textContent = nameInput.value;
     profileJob.textContent = jobInput.value;
     enableValidation(configFormSelector);
-    console.log('ФОРМА ОТПРАВЛЕНА')
     closePopup(popupProfileInfo);
 };
 
