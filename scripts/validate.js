@@ -15,7 +15,7 @@ const addError = function (inputElement, errorElement, config) {
 
 const deleteError = function (inputElement, errorElement, config) {
     inputElement.classList.remove(config.inputErrorClass);
-    errorElement.textContent = inputElement.validationMessage;
+    errorElement.textContent = '';
 };
 
 const disabledButton = function (buttonElement, config) {
@@ -50,17 +50,11 @@ const checkInputValidity = function (inputElement, formElement, config) {
 };
 
 const cleanErrorMessage = function (popup, config) {
-    if (!popup.querySelector('.popup__form')) return
-
-    const errorsList = popup.querySelectorAll(config.errorClass);
     const inputsList = popup.querySelectorAll(config.inputSelector);
 
-    errorsList.forEach((item) => {
-        item.textContent = '';
-    });
-
-    inputsList.forEach((item) => {
-        item.classList.remove(config.inputErrorClass);
+    inputsList.forEach((inputItem) => {
+        const errorItem = popup.querySelector(`#${inputItem.name}-error`);
+        deleteError(inputItem, errorItem, config);
     });
 };
 

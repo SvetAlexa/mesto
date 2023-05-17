@@ -21,6 +21,7 @@ const buttonAddNewCard = document.querySelector('.profile__add-button');
 const buttonEditProfileInfo = document.querySelector('.profile__edit-button');
 
 const buttonFormSave = document.querySelector('.popup__button-sumbit_save');
+const buttonFormAddCard = document.querySelector('.popup__button-sumbit_create');
 
 const buttonsClosePopup = document.querySelectorAll('.popup__close-button');
 
@@ -50,9 +51,9 @@ const createNewCard = (name, link) => {
     });
 
     imageElement.addEventListener('click', () => {
-        imagePopup.src = imageElement.src;
-        imagePopup.alt = imageElement.alt;
-        titlePopup.textContent = titleElement.textContent;
+        imagePopup.src = link;
+        imagePopup.alt = name;
+        titlePopup.textContent = name;
         openPopup(popupOpenImage);
     });
 
@@ -77,16 +78,14 @@ const renderNewCard = (name, link) => {
 const openPopup = (popup) => {
     popup.classList.add('popup_is-opened');
     document.addEventListener('keydown', closePopupByEsc);
-    popup.addEventListener('click', closePopupByOverlay);
-    cleanErrorMessage(popup, configFormSelector);
 };
 
 const closePopup = (popup) => {
     popup.classList.remove('popup_is-opened');
     document.removeEventListener('keydown', closePopupByEsc);
-    popup.removeEventListener('click', closePopupByOverlay);
 };
 
+//закрытие попапов по нажатию на крестик
 buttonsClosePopup.forEach((item) => {
     item.addEventListener('click', (evt) => {
         const closeButton = evt.target;
@@ -96,20 +95,20 @@ buttonsClosePopup.forEach((item) => {
 
 const closePopupByEsc = (evt) => {
     const key = evt.key;
-    popups.forEach((item) => {
-        if (key == 'Escape' && item.classList.contains('popup_is-opened')) {
-            closePopup(item);
-        }
-    });
-}
-
-const closePopupByOverlay = (evt) => {
-    popups.forEach((item) => {
-        if (evt.target === evt.currentTarget && item.classList.contains('popup_is-opened')) {
-            closePopup(item);
-        }
-    });
+    if (key == 'Escape') {
+        const activePopup = document.querySelector('.popup_is-opened');
+        closePopup(activePopup);
+    }
 };
+
+//закрытие попапов по overlay
+popups.forEach((item) => {
+    item.addEventListener('click', (evt) => {
+        if (evt.target === evt.currentTarget) {
+            closePopup(evt.currentTarget);
+        }
+    });
+});
 
 const handleFormSubmitNewCard = (evt) => {
     evt.preventDefault();
@@ -123,16 +122,19 @@ const handleFormSubmitNewCard = (evt) => {
 formPopupNewCard.addEventListener('submit', handleFormSubmitNewCard);
 
 buttonAddNewCard.addEventListener('click', function (evt) {
+    cleanErrorMessage(popupNewCard, configFormSelector);
     openPopup(popupNewCard);
     titleInput.value = '';
     linkInput.value = '';
+    disabledButton(buttonFormAddCard, configFormSelector);
 });
 
 buttonEditProfileInfo.addEventListener('click', function (evt) {
+    cleanErrorMessage(popupProfileInfo, configFormSelector);
     openPopup(popupProfileInfo);
     nameInput.value = profileName.textContent;
     jobInput.value = profileJob.textContent;
-    toggleButtonStatus(buttonFormSave, true, configFormSelector);
+    enabledButton(buttonFormSave, configFormSelector);
 });
 
 function handleFormSubmitEdit(evt) {
