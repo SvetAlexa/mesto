@@ -95,7 +95,7 @@ buttonsClosePopup.forEach((item) => {
 
 const closePopupByEsc = (evt) => {
     const key = evt.key;
-    if (key == 'Escape') {
+    if (key === 'Escape') {
         const activePopup = document.querySelector('.popup_is-opened');
         closePopup(activePopup);
     }
@@ -115,7 +115,6 @@ const handleFormSubmitNewCard = (evt) => {
     const name = titleInput.value;
     const link = linkInput.value;
     renderNewCard(name, link);
-    enableValidation(configFormSelector);
     closePopup(popupNewCard);
 };
 
@@ -141,7 +140,6 @@ function handleFormSubmitEdit(evt) {
     evt.preventDefault();
     profileName.textContent = nameInput.value;
     profileJob.textContent = jobInput.value;
-    enableValidation(configFormSelector);
     closePopup(popupProfileInfo);
 };
 
