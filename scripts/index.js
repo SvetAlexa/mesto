@@ -1,3 +1,5 @@
+import { initialCards, Card } from './Card.js'
+
 const initialCardsContainer = document.querySelector('.elements__lists');
 
 const popupNewCard = document.querySelector('.popup_type_new-card');
@@ -30,49 +32,62 @@ const template = document.querySelector('#element-item-template');
 const imagePopup = document.querySelector('.popup__image');
 const titlePopup = document.querySelector('.popup__caption');
 
-const createNewCard = (name, link) => {
-    const li = template.content.querySelector('.element').cloneNode(true);
+// const createNewCard = (name, link) => {
+//     const li = template.content.querySelector('.element').cloneNode(true);
 
-    const titleElement = li.querySelector('.element__title');
-    const imageElement = li.querySelector('.element__image');
+//     const titleElement = li.querySelector('.element__title');
+//     const imageElement = li.querySelector('.element__image');
 
-    titleElement.textContent = name;
-    imageElement.alt = name;
-    imageElement.src = link;
+//     titleElement.textContent = name;
+//     imageElement.alt = name;
+//     imageElement.src = link;
 
-    li.querySelector('.element__delete').addEventListener('click', () => {
-        li.remove();
-    });
+//     li.querySelector('.element__delete').addEventListener('click', () => {
+//         li.remove();
+//     });
 
-    const likeButton = li.querySelector('.element__likes');
+//     const likeButton = li.querySelector('.element__likes');
 
-    likeButton.addEventListener('click', () => {
-        likeButton.classList.toggle('element__likes_is_active');
-    });
+//     likeButton.addEventListener('click', () => {
+//         likeButton.classList.toggle('element__likes_is_active');
+//     });
 
-    imageElement.addEventListener('click', () => {
-        imagePopup.src = link;
-        imagePopup.alt = name;
-        titlePopup.textContent = name;
-        openPopup(popupOpenImage);
-    });
+//     imageElement.addEventListener('click', () => {
+//         imagePopup.src = link;
+//         imagePopup.alt = name;
+//         titlePopup.textContent = name;
+//         openPopup(popupOpenImage);
+//     });
 
-    return li;
-};
+//     return li;
+// };
 
-const listCards = initialCards.map((card) => {
-    const name = card.name;
-    const link = card.link;
+// const handleImageClick = () => {
+//     imagePopup.src = this._link;
+//     imagePopup.alt = this._name;
+//     titlePopup.textContent = this._name;
+//     openPopup(popupOpenImage);
+// }
 
-    const cardElement = createNewCard(name, link);
+//обработчик открытия попапа по картинке
+function handleImageClick(name, link) {
+    imagePopup.src = link;
+    imagePopup.alt = name;
+    titlePopup.textContent = name;
+    openPopup(popupOpenImage);
+}
 
-    return cardElement;
+//отрисовка карточек "из коробки"
+initialCards.forEach((item) => {
+    const card = new Card(item, '#element-item-template', handleImageClick);
+    const cardElement = card.generateCard();
+    initialCardsContainer.append(cardElement);
 });
 
-initialCardsContainer.append(...listCards);
-
-const renderNewCard = (name, link) => {
-    initialCardsContainer.prepend(createNewCard(name, link));
+function renderNewCard(dataCard) {
+    const card = new Card(dataCard, '#element-item-template', handleImageClick);
+    const cardElement = card.generateCard();
+    initialCardsContainer.prepend(cardElement);
 };
 
 const openPopup = (popup) => {
@@ -112,28 +127,30 @@ popups.forEach((item) => {
 
 const handleFormSubmitNewCard = (evt) => {
     evt.preventDefault();
-    const name = titleInput.value;
-    const link = linkInput.value;
-    renderNewCard(name, link);
+    const dataCard = {
+        name: titleInput.value,
+        link: linkInput.value
+    }
+    renderNewCard(dataCard);
     closePopup(popupNewCard);
 };
 
 formPopupNewCard.addEventListener('submit', handleFormSubmitNewCard);
 
 buttonAddNewCard.addEventListener('click', function (evt) {
-    cleanErrorMessage(popupNewCard, configFormSelector);
+    // cleanErrorMessage(popupNewCard, configFormSelector);
     openPopup(popupNewCard);
     titleInput.value = '';
     linkInput.value = '';
-    disabledButton(buttonFormAddCard, configFormSelector);
+    // disabledButton(buttonFormAddCard, configFormSelector);
 });
 
 buttonEditProfileInfo.addEventListener('click', function (evt) {
-    cleanErrorMessage(popupProfileInfo, configFormSelector);
+    // cleanErrorMessage(popupProfileInfo, configFormSelector);
     openPopup(popupProfileInfo);
     nameInput.value = profileName.textContent;
     jobInput.value = profileJob.textContent;
-    enabledButton(buttonFormSave, configFormSelector);
+    // enabledButton(buttonFormSave, configFormSelector);
 });
 
 function handleFormSubmitEdit(evt) {

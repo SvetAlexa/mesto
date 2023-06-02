@@ -1,4 +1,4 @@
-const initialCards = [
+export const initialCards = [
     {
         link: 'https://images.unsplash.com/photo-1644543419167-2cc7a5738665?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8JUQwJUExJUQwJUI4JUQxJTg1JUQwJUJFJUQxJTgyJUQxJThEJTIwJUQwJTkwJUQwJUJCJUQwJUI4JUQwJUJEJUQxJThDfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=500&q=60',
         name: 'Сихотэ-Алинь Приморский край',
@@ -24,3 +24,56 @@ const initialCards = [
         name: 'Карачаево-Черкесия Сентинский храм',
     },
 ];
+
+export class Card {
+    constructor(data, templateSelector, handleImageClick) {
+        this._name = data.name;
+        this._link = data.link;
+        this._templateSelector = templateSelector;
+        this._handleImageClick = handleImageClick;
+    }
+
+    _getTemplate() {
+        const cardElement = document.querySelector(this._templateSelector).content.querySelector('.element').cloneNode(true);
+
+        return cardElement;
+    }
+
+    _setEventListeners() {
+        this._element.querySelector('.element__likes').addEventListener('click', () => {
+            this._handleLikeClick();
+        })
+        this._element.querySelector('.element__delete').addEventListener('click', () => {
+            this._handleRemoveButtonClick();
+        })
+        this._element.querySelector('.element__image').addEventListener('click', () => {
+            this._handleImageClick(this._name, this._link);
+        })
+    }
+
+    // //обработчик лайка карточки
+    _handleLikeClick() {
+        this._element.querySelector('.element__likes').classList.toggle('element__likes_is_active');
+    }
+
+    //обработчик кнопки удаления карточки
+    _handleRemoveButtonClick() {
+        this._element.remove();
+    }
+
+    generateCard() {
+        this._element = this._getTemplate();
+        console.log(this._element)
+
+        this._setEventListeners();
+
+        const titleElement = this._element.querySelector('.element__title');
+        const imageElement = this._element.querySelector('.element__image');
+
+        titleElement.textContent = this._name;
+        imageElement.alt = this._name;
+        imageElement.src = this._link;
+
+        return this._element;
+    }
+}
