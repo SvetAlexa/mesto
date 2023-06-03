@@ -1,4 +1,5 @@
-import { initialCards, Card } from './Card.js'
+import { initialCards, Card } from './Card.js';
+import { configFormSelector, FormValidator } from './FormValidator.js';
 
 const initialCardsContainer = document.querySelector('.elements__lists');
 
@@ -27,47 +28,8 @@ const buttonFormAddCard = document.querySelector('.popup__button-sumbit_create')
 
 const buttonsClosePopup = document.querySelectorAll('.popup__close-button');
 
-const template = document.querySelector('#element-item-template');
-
 const imagePopup = document.querySelector('.popup__image');
 const titlePopup = document.querySelector('.popup__caption');
-
-// const createNewCard = (name, link) => {
-//     const li = template.content.querySelector('.element').cloneNode(true);
-
-//     const titleElement = li.querySelector('.element__title');
-//     const imageElement = li.querySelector('.element__image');
-
-//     titleElement.textContent = name;
-//     imageElement.alt = name;
-//     imageElement.src = link;
-
-//     li.querySelector('.element__delete').addEventListener('click', () => {
-//         li.remove();
-//     });
-
-//     const likeButton = li.querySelector('.element__likes');
-
-//     likeButton.addEventListener('click', () => {
-//         likeButton.classList.toggle('element__likes_is_active');
-//     });
-
-//     imageElement.addEventListener('click', () => {
-//         imagePopup.src = link;
-//         imagePopup.alt = name;
-//         titlePopup.textContent = name;
-//         openPopup(popupOpenImage);
-//     });
-
-//     return li;
-// };
-
-// const handleImageClick = () => {
-//     imagePopup.src = this._link;
-//     imagePopup.alt = this._name;
-//     titlePopup.textContent = this._name;
-//     openPopup(popupOpenImage);
-// }
 
 //обработчик открытия попапа по картинке
 function handleImageClick(name, link) {
@@ -118,12 +80,19 @@ const closePopupByEsc = (evt) => {
 
 //закрытие попапов по overlay
 popups.forEach((item) => {
-    item.addEventListener('click', (evt) => {
+    item.addEventListener('mousedown', (evt) => {
         if (evt.target === evt.currentTarget) {
             closePopup(evt.currentTarget);
         }
     });
 });
+
+
+const formNewCardValidation = new FormValidator(configFormSelector, formPopupNewCard);
+const formProfileInfoValidation = new FormValidator(configFormSelector, formPopupProfileInfo);
+
+formNewCardValidation.enableValidation();
+formProfileInfoValidation.enableValidation();
 
 const handleFormSubmitNewCard = (evt) => {
     evt.preventDefault();
@@ -137,20 +106,22 @@ const handleFormSubmitNewCard = (evt) => {
 
 formPopupNewCard.addEventListener('submit', handleFormSubmitNewCard);
 
+//слушатель кнопки добавления новой карточки
 buttonAddNewCard.addEventListener('click', function (evt) {
-    // cleanErrorMessage(popupNewCard, configFormSelector);
+    formNewCardValidation.cleanErrorMessage();
     openPopup(popupNewCard);
     titleInput.value = '';
     linkInput.value = '';
-    // disabledButton(buttonFormAddCard, configFormSelector);
+    formNewCardValidation.disabledButton(buttonFormAddCard);
 });
 
+//слушатель кнопки редактирования профиля
 buttonEditProfileInfo.addEventListener('click', function (evt) {
-    // cleanErrorMessage(popupProfileInfo, configFormSelector);
+    formProfileInfoValidation.cleanErrorMessage()
     openPopup(popupProfileInfo);
     nameInput.value = profileName.textContent;
     jobInput.value = profileJob.textContent;
-    // enabledButton(buttonFormSave, configFormSelector);
+    formProfileInfoValidation.enabledButton(buttonFormSave);
 });
 
 function handleFormSubmitEdit(evt) {

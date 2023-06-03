@@ -63,7 +63,6 @@ export class Card {
 
     generateCard() {
         this._element = this._getTemplate();
-        console.log(this._element)
 
         this._setEventListeners();
 
