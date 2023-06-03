@@ -87,7 +87,6 @@ popups.forEach((item) => {
     });
 });
 
-
 const formNewCardValidation = new FormValidator(configFormSelector, formPopupNewCard);
 const formProfileInfoValidation = new FormValidator(configFormSelector, formPopupProfileInfo);
 
