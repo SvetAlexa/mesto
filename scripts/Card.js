@@ -39,8 +39,8 @@ export class Card {
         return cardElement;
     }
 
-     //обработчик лайка карточки
-     _handleLikeClick() {
+    //обработчик лайка карточки
+    _handleLikeClick() {
         this._element.querySelector('.element__likes').classList.toggle('element__likes_is_active');
     }
 
