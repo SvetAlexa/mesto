@@ -39,6 +39,16 @@ export class Card {
         return cardElement;
     }
 
+     //обработчик лайка карточки
+     _handleLikeClick() {
+        this._element.querySelector('.element__likes').classList.toggle('element__likes_is_active');
+    }
+
+    //обработчик кнопки удаления карточки
+    _handleRemoveButtonClick() {
+        this._element.remove();
+    }
+
     _setEventListeners() {
         this._element.querySelector('.element__likes').addEventListener('click', () => {
             this._handleLikeClick();
@@ -49,16 +59,6 @@ export class Card {
         this._element.querySelector('.element__image').addEventListener('click', () => {
             this._handleImageClick(this._name, this._link);
         })
-    }
-
-    // //обработчик лайка карточки
-    _handleLikeClick() {
-        this._element.querySelector('.element__likes').classList.toggle('element__likes_is_active');
-    }
-
-    //обработчик кнопки удаления карточки
-    _handleRemoveButtonClick() {
-        this._element.remove();
     }
 
     generateCard() {

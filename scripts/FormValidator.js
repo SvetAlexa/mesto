@@ -16,6 +16,9 @@ export class FormValidator {
         this._inputErrorClass = selectorsConfig.inputErrorClass;
         this._errorClass = selectorsConfig.errorClass;
         this._formElement = formElement;
+
+        this._inputsList = this._formElement.querySelectorAll(this._inputSelector);
+        this._submitButtonElement = this._formElement.querySelector(this._submitButtonSelector);
     }
 
     _addError(inputElement, errorElement) {
@@ -47,9 +50,7 @@ export class FormValidator {
     };
 
     cleanErrorMessage() {
-        const inputsList = this._formElement.querySelectorAll(this._inputSelector);
-
-        inputsList.forEach((inputItem) => {
+        this._inputsList.forEach((inputItem) => {
             const errorItem = this._formElement.querySelector(`#${inputItem.name}-error`);
             this._deleteError(inputItem, errorItem);
         });
@@ -69,14 +70,11 @@ export class FormValidator {
     };
 
     _setEventListener() {
-        const inputsList = this._formElement.querySelectorAll(this._inputSelector);
-        const submitButtonElement = this._formElement.querySelector(this._submitButtonSelector);
+        this._toggleButtonStatus(this._submitButtonElement, this._formElement.checkValidity());
 
-        this._toggleButtonStatus(submitButtonElement, this._formElement.checkValidity());
-
-        inputsList.forEach((inputItem) => {
+        this._inputsList.forEach((inputItem) => {
             inputItem.addEventListener('input', () => {
-                this._toggleButtonStatus(submitButtonElement, this._formElement.checkValidity());
+                this._toggleButtonStatus(this._submitButtonElement, this._formElement.checkValidity());
                 this._checkInputValidity(inputItem);
             });
         });
@@ -85,5 +83,4 @@ export class FormValidator {
     enableValidation() {
         this._setEventListener();
     };
-
 }
