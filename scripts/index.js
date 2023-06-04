@@ -33,26 +33,19 @@ const buttonsClosePopup = document.querySelectorAll('.popup__close-button');
 const imagePopup = document.querySelector('.popup__image');
 const titlePopup = document.querySelector('.popup__caption');
 
-function createCard(data, templateSelector, handleImageClick, position) {
+function createCard(data, templateSelector, handleImageClick) {
     const card = new Card(data, templateSelector, handleImageClick);
     const cardElement = card.generateCard();
-    switch (position) {
-        case 'append':
-            initialCardsContainer.append(cardElement);
-            break;
-        case 'prepend':
-            initialCardsContainer.prepend(cardElement);
-            break;
-    }
-};
+    return cardElement;
+}
 
 //отрисовка карточек "из коробки"
 initialCards.forEach((item) => {
-    createCard(item, '#element-item-template', handleImageClick, 'append')
+    initialCardsContainer.append(createCard(item, '#element-item-template', handleImageClick));
 });
 
 function renderNewCard(data) {
-    createCard(data, '#element-item-template', handleImageClick, 'prepend')
+   initialCardsContainer.prepend(createCard(data, '#element-item-template', handleImageClick));
 };
 
 const openPopup = (popup) => {
