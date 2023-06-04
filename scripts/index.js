@@ -1,5 +1,7 @@
-import { initialCards, Card } from './Card.js';
-import { configFormSelector, FormValidator } from './FormValidator.js';
+import { Card } from './Card.js';
+import { initialCards } from './cards.js'
+import { FormValidator } from './FormValidator.js';
+import { configFormSelector } from './validate.js';
 
 const initialCardsContainer = document.querySelector('.elements__lists');
 
@@ -31,17 +33,26 @@ const buttonsClosePopup = document.querySelectorAll('.popup__close-button');
 const imagePopup = document.querySelector('.popup__image');
 const titlePopup = document.querySelector('.popup__caption');
 
+function createCard(data, templateSelector, handleImageClick, position) {
+    const card = new Card(data, templateSelector, handleImageClick);
+    const cardElement = card.generateCard();
+    switch (position) {
+        case 'append':
+            initialCardsContainer.append(cardElement);
+            break;
+        case 'prepend':
+            initialCardsContainer.prepend(cardElement);
+            break;
+    }
+};
+
 //отрисовка карточек "из коробки"
 initialCards.forEach((item) => {
-    const card = new Card(item, '#element-item-template', handleImageClick);
-    const cardElement = card.generateCard();
-    initialCardsContainer.append(cardElement);
+    createCard(item, '#element-item-template', handleImageClick, 'append')
 });
 
-function renderNewCard(dataCard) {
-    const card = new Card(dataCard, '#element-item-template', handleImageClick);
-    const cardElement = card.generateCard();
-    initialCardsContainer.prepend(cardElement);
+function renderNewCard(data) {
+    createCard(data, '#element-item-template', handleImageClick, 'prepend')
 };
 
 const openPopup = (popup) => {
