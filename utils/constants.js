@@ -1,3 +1,12 @@
+export const configFormSelector = {
+    formSelector: '.popup__form',
+    inputSelector: '.popup__input',
+    submitButtonSelector: '.popup__button-sumbit',
+    inactiveButtonClass: 'popup__button-sumbit_is-invalid',
+    inputErrorClass: 'popup__input_is-invalid',
+    errorClass: '.error'
+}
+
 export const initialCards = [
     {
         link: 'https://images.unsplash.com/photo-1644543419167-2cc7a5738665?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8JUQwJUExJUQwJUI4JUQxJTg1JUQwJUJFJUQxJTgyJUQxJThEJTIwJUQwJTkwJUQwJUJCJUQwJUI4JUQwJUJEJUQxJThDfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=500&q=60',

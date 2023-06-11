@@ -1,7 +1,7 @@
-import { Card } from './Card.js';
-import { initialCards } from './cards.js'
-import { FormValidator } from './FormValidator.js';
-import { configFormSelector } from './validate.js';
+import { Card } from '../components/Card.js';
+import { initialCards } from '../utils/constants.js';
+import { FormValidator } from '../components/FormValidator.js';
+import { configFormSelector } from '../utils/constants.js';
 
 const initialCardsContainer = document.querySelector('.elements__lists');
 
@@ -101,8 +101,7 @@ formProfileInfoValidation.enableValidation();
 buttonAddNewCard.addEventListener('click', function (evt) {
     formNewCardValidation.cleanErrorMessage();
     openPopup(popupNewCard);
-    titleInput.value = '';
-    linkInput.value = '';
+    formPopupNewCard.reset();
     formNewCardValidation.disabledButton(buttonFormAddCard);
 });
 
