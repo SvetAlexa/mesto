@@ -2,8 +2,11 @@ import { Card } from '../components/Card.js';
 import { initialCards } from '../utils/constants.js';
 import { FormValidator } from '../components/FormValidator.js';
 import { configFormSelector } from '../utils/constants.js';
+import Section from '../components/Section.js';
 
-const initialCardsContainer = document.querySelector('.elements__lists');
+import { initialCardsContainer } from '../utils/constants.js';
+
+
 
 const popupNewCard = document.querySelector('.popup_type_new-card');
 const popupProfileInfo = document.querySelector('.popup_type_edit');
@@ -33,6 +36,7 @@ const buttonsClosePopup = document.querySelectorAll('.popup__close-button');
 const imagePopup = document.querySelector('.popup__image');
 const titlePopup = document.querySelector('.popup__caption');
 
+//функция создания новой карточки
 function createCard(data, templateSelector, handleImageClick) {
     const card = new Card(data, templateSelector, handleImageClick);
     const cardElement = card.generateCard();
@@ -40,12 +44,35 @@ function createCard(data, templateSelector, handleImageClick) {
 }
 
 //отрисовка карточек "из коробки"
-initialCards.forEach((item) => {
-    initialCardsContainer.append(createCard(item, '#element-item-template', handleImageClick));
-});
+function renderDefaultCards() {
+    const defaultCard = new Section({
+        items: initialCards,
+        renderer: (item) => {
+            const cardNode = createCard(item, '#element-item-template', handleImageClick);
+            console.log(cardNode)
+            defaultCard.addItem(cardNode, 'append');
+        }
+    },
+        initialCardsContainer
+    );
+    defaultCard.renderItems()
+};
 
+renderDefaultCards()
+
+//функция отрисовки карточки от пользователя
 function renderNewCard(data) {
-   initialCardsContainer.prepend(createCard(data, '#element-item-template', handleImageClick));
+    const newCard = new Section({
+        items: data,
+        renderer: (item) => {
+            const cardNode = createCard(item, '#element-item-template', handleImageClick);
+            console.log(cardNode)
+            newCard.addItem(cardNode, 'prepend');
+        }
+    },
+        initialCardsContainer
+    );
+    newCard.renderItems()
 };
 
 const openPopup = (popup) => {
@@ -117,10 +144,10 @@ buttonEditProfileInfo.addEventListener('click', function (evt) {
 //обработчик сабмита создания новой карточки
 const handleFormSubmitNewCard = (evt) => {
     evt.preventDefault();
-    const dataCard = {
+    const dataCard = [{
         name: titleInput.value,
         link: linkInput.value
-    }
+    }]
     renderNewCard(dataCard);
     closePopup(popupNewCard);
 };
