@@ -26,6 +26,7 @@ export const initialCards = [
 ];
 
 export const initialCardsContainer = '.elements__lists';
+export const templateCardElement = '#element-item-template';
 
 export const configFormSelector = {
     formSelector: '.popup__form',
