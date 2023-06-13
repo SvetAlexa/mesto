@@ -25,10 +25,10 @@ const titleInput = formPopupNewCard.querySelector('.popup__input_value_title');
 const linkInput = formPopupNewCard.querySelector('.popup__input_value_link');
 
 const nameInput = formPopupProfileInfo.querySelector('.popup__input_value_name');
-const jobInput = formPopupProfileInfo.querySelector('.popup__input_value_activity');
+const aboutInput = formPopupProfileInfo.querySelector('.popup__input_value_activity');
 
 const profileName = document.querySelector('.profile__name');
-const profileAbout = document.querySelector('.profile__activity');
+const profileAbout = '.profile__activity';
 
 const buttonAddNewCard = document.querySelector('.profile__add-button');
 const buttonEditProfileInfo = document.querySelector('.profile__edit-button');
@@ -169,7 +169,7 @@ formProfileInfoValidation.enableValidation();
 //     // }]
 // }
 
-const userInfo = new UserInfo({ profileName, profileAbout })
+const userInfo = new UserInfo({ userNameSelector:'.profile__name', userAboutSelector: '.profile__activity' })
 
 const formCreateNewCard = new PopupWithForm({
     popupSelector: popupNewCard,
@@ -190,19 +190,23 @@ buttonAddNewCard.addEventListener('click', function (evt) {
 
 const formProfileInfo = new PopupWithForm({
     popupSelector: popupProfileInfo,
-    handleSubmitForm: () => {
-        
+    handleSubmitForm: (dataInput) => {
+        userInfo.setUserInfo(dataInput);
         formProfileInfo.close()
     }
 })
 formProfileInfo.setEventListeners();
 
+//внесение данных пользователя со страницы в поля формы
+function setInputValues() {
+    nameInput.value = userInfo.getUserInfo().name;
+    aboutInput.value = userInfo.getUserInfo().about;
+}
+
 //слушатель кнопки редактирования профиля
 buttonEditProfileInfo.addEventListener('click', function (evt) {
     formProfileInfoValidation.cleanErrorMessage()
     formProfileInfo.open();
-    userInfo.getUserInfo()
-    // nameInput.value = profileName.textContent;
-    // jobInput.value = profileJob.textContent;
+    setInputValues()
     formProfileInfoValidation.enabledButton(buttonFormSave);
 });
