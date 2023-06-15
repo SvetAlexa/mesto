@@ -73,28 +73,6 @@ function renderNewCard(data) {
     newCard.renderItems()
 };
 
-
-
-
-
-// const openPopup = (popup) => {
-//     popup.classList.add('popup_is-opened');
-//     document.addEventListener('keydown', closePopupByEsc);
-// };
-
-// const closePopup = (popup) => {
-//     popup.classList.remove('popup_is-opened');
-//     document.removeEventListener('keydown', closePopupByEsc);
-// };
-
-//обработчик открытия попапа по картинке
-// function handleImageClick({name, link}) {
-//     imagePopup.src = link;
-//     imagePopup.alt = name;
-//     titlePopup.textContent = name;
-//     openPopup(popupOpenImage);
-// };
-
 const popupWithImage = new PopupWithImage(popupOpenImage);
 popupWithImage.setEventListeners();
 
@@ -103,71 +81,11 @@ function handleCardClick(title, link) {
     popupWithImage.open(title, link)
 };
 
-// //закрытие попапов по нажатию на крестик
-// buttonsClosePopup.forEach((item) => {
-//     item.addEventListener('click', (evt) => {
-//         const closeButton = evt.target;
-//         closePopup(closeButton.closest('.popup'));
-//     });
-// });
-
-// //закрытие попапов по overlay
-// popups.forEach((item) => {
-//     item.addEventListener('mousedown', (evt) => {
-//         if (evt.target === evt.currentTarget) {
-//             closePopup(evt.currentTarget);
-//         }
-//     });
-// });
-
-// const closePopupByEsc = (evt) => {
-//     const key = evt.key;
-//     if (key === 'Escape') {
-//         const activePopup = document.querySelector('.popup_is-opened');
-//         closePopup(activePopup);
-//     }
-// };
-
 const formNewCardValidation = new FormValidator(configFormSelector, formPopupNewCard);
 const formProfileInfoValidation = new FormValidator(configFormSelector, formPopupProfileInfo);
 
 formNewCardValidation.enableValidation();
 formProfileInfoValidation.enableValidation();
-
-
-
-
-
-//обработчик сабмита создания новой карточки
-// const handleFormSubmitNewCard = (evt) => {
-//     evt.preventDefault();
-//     const dataCard = [{
-//         name: titleInput.value,
-//         link: linkInput.value
-//     }]
-//     renderNewCard(dataCard);
-//     closePopup(popupNewCard);
-// };
-
-// formPopupNewCard.addEventListener('submit', handleFormSubmitNewCard);
-
-// //обработчик сабмита редактирования профиля
-// function handleFormSubmitEdit(evt) {
-//     evt.preventDefault();
-//     profileName.textContent = nameInput.value;
-//     profileJob.textContent = jobInput.value;
-//     closePopup(popupProfileInfo);
-// };
-
-// formPopupProfileInfo.addEventListener('submit', handleFormSubmitEdit);
-
-// function handleSubmitForm(dataCard) {
-//     evt.preventDefault();
-//     // const dataCard = [{
-//     //     name: name.value,
-//     //     link: linkInput.value
-//     // }]
-// }
 
 const userInfo = new UserInfo({ userNameSelector:'.profile__name', userAboutSelector: '.profile__activity' })
 
@@ -199,7 +117,7 @@ formProfileInfo.setEventListeners();
 
 //внесение данных пользователя со страницы в поля формы
 function setInputValues() {
-    nameInput.value = userInfo.getUserInfo().name;
+    nameInput.value = userInfo.getUserInfo().user;
     aboutInput.value = userInfo.getUserInfo().about;
 }
 

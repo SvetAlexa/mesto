@@ -5,16 +5,13 @@ export default class UserInfo {
     }
 
     getUserInfo() {
-        console.log(this._userNameSelector)
-        this._userInfo = { name: this._userNameSelector.textContent, about: this._userAboutSelector.textContent };
-        console.log(this._userInfo)
+        this._userInfo = { user: this._userNameSelector.textContent, about: this._userAboutSelector.textContent };
       
         return this._userInfo;
-
     }
 
     setUserInfo(dataInput) {
-        this._userNameSelector.textContent = dataInput.name;
+        this._userNameSelector.textContent = dataInput.user;
         this._userAboutSelector.textContent = dataInput.about;
     }
 }

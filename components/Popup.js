@@ -19,27 +19,22 @@ export default class Popup {
         const key = evt.key;
         if (key === 'Escape') {
             this.close();
-            console.log('попап закрыт по кнопке Escape')
         }
     }
 
     _handleEscButtonClick(evt) {
         if (evt.target === this._buttonClosePopup) {
             this.close();
-            console.log('попап закрыт по крестику')
         }
     }
 
     _handleOverlayClick(evt) {
         if (evt.target === evt.currentTarget) {
             this.close();
-            console.log('попап закрыт по оверлею')
         }
     }
 
     setEventListeners() {
-        //console.log(this._popupSelector)
-        //console.log(this._popupSelector.querySelector('.popup__close-button'))
         this._buttonClosePopup = this._popupSelector.querySelector('.popup__close-button');
 
         this._buttonClosePopup.addEventListener('click', this._handleEscButtonClick.bind(this));
