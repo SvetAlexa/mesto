@@ -1,42 +1,28 @@
-import { Card } from '../components/Card.js';
-import { initialCards } from '../utils/constants.js';
-import { FormValidator } from '../components/FormValidator.js';
-import { configFormSelector } from '../utils/constants.js';
+import Card from '../components/Card.js';
+import FormValidator from '../components/FormValidator.js';
 import Section from '../components/Section.js';
 import PopupWithImage from '../components/PopupWithImage.js';
 import PopupWithForm from '../components/PopupWithForm.js';
 import UserInfo from '../components/UserInfo.js';
 
 import {
+    initialCards,
     initialCardsContainer,
-    templateCardElement
+    configFormSelector,
+    templateCardElement,
+    popupNewCard,
+    popupProfileInfo,
+    popupOpenImage,
+    formPopupNewCard,
+    formPopupProfileInfo,
+    nameInput,
+    aboutInput,
+    buttonAddNewCard,
+    buttonEditProfileInfo,
+    buttonFormSave,
+    buttonFormAddCard
 }
     from '../utils/constants.js';
-
-const popupNewCard = document.querySelector('.popup_type_new-card');
-const popupProfileInfo = document.querySelector('.popup_type_edit');
-const popupOpenImage = document.querySelector('.popup_type_image');
-const popups = document.querySelectorAll('.popup');
-
-const formPopupNewCard = document.querySelector('.popup__form_type_new-card');
-const formPopupProfileInfo = document.querySelector('.popup__form_type_edit');
-
-const titleInput = formPopupNewCard.querySelector('.popup__input_value_title');
-const linkInput = formPopupNewCard.querySelector('.popup__input_value_link');
-
-const nameInput = formPopupProfileInfo.querySelector('.popup__input_value_name');
-const aboutInput = formPopupProfileInfo.querySelector('.popup__input_value_activity');
-
-const profileName = document.querySelector('.profile__name');
-const profileAbout = '.profile__activity';
-
-const buttonAddNewCard = document.querySelector('.profile__add-button');
-const buttonEditProfileInfo = document.querySelector('.profile__edit-button');
-
-const buttonFormSave = document.querySelector('.popup__button-sumbit_save');
-const buttonFormAddCard = document.querySelector('.popup__button-sumbit_create');
-
-const buttonsClosePopup = document.querySelectorAll('.popup__close-button');
 
 //функция создания новой карточки
 function createCard(data, templateSelector, handleImageClick) {
