@@ -75,20 +75,20 @@ formProfileInfoValidation.enableValidation();
 
 const userInfo = new UserInfo({ userNameSelector:'.profile__name', userAboutSelector: '.profile__activity' })
 
-const formCreateNewCard = new PopupWithForm({
+const formNewCard = new PopupWithForm({
     popupSelector: popupNewCard,
     handleSubmitForm: (data) => {
         renderNewCard([data]);
-        formCreateNewCard.close()
+        formNewCard.close()
     }
 })
-formCreateNewCard.setEventListeners();
+formNewCard.setEventListeners();
 
 
 //слушатель кнопки добавления новой карточки
 buttonAddNewCard.addEventListener('click', function (evt) {
     formNewCardValidation.cleanErrorMessage();
-    formCreateNewCard.open();
+    formNewCard.open();
     formNewCardValidation.disabledButton(buttonFormAddCard);
 });
 
