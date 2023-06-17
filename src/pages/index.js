@@ -15,16 +15,18 @@ import {
     popupNewCard,
     popupProfileInfo,
     popupOpenImage,
+}
+    from '../scripts/utils/constants.js';
+
+import {
     formPopupNewCard,
     formPopupProfileInfo,
     nameInput,
     aboutInput,
     buttonAddNewCard,
-    buttonEditProfileInfo,
-    buttonFormSave,
-    buttonFormAddCard
+    buttonEditProfileInfo
 }
-    from '../scripts/utils/constants.js';
+from '../scripts/utils/elements.js'
 
 //функция создания новой карточки
 function createCard(data, templateSelector, handleImageClick) {
@@ -79,14 +81,13 @@ const formProfileInfo = new PopupWithForm({
     popupSelector: popupProfileInfo,
     handleSubmitForm: (dataInput) => {
         userInfo.setUserInfo(dataInput);
-        formProfileInfo.close()
     }
 })
 formProfileInfo.setEventListeners();
 
 //внесение данных пользователя со страницы в поля формы
 function setInputsFormProfileInfo() {
-    const dataUserProfile = userInfo.getUserInfo()
+    const dataUserProfile = userInfo.getUserInfo();
     nameInput.value = dataUserProfile.user;
     aboutInput.value = dataUserProfile.about;
 }

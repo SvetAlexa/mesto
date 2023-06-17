@@ -32,18 +32,6 @@ export const popupNewCard = '.popup_type_new-card';
 export const popupProfileInfo = '.popup_type_edit';
 export const popupOpenImage = '.popup_type_image';
 
-export const formPopupNewCard = document.querySelector('.popup__form_type_new-card');
-export const formPopupProfileInfo = document.querySelector('.popup__form_type_edit');
-
-export const nameInput = formPopupProfileInfo.querySelector('.popup__input_value_name');
-export const aboutInput = formPopupProfileInfo.querySelector('.popup__input_value_activity');
-
-export const buttonAddNewCard = document.querySelector('.profile__add-button');
-export const buttonEditProfileInfo = document.querySelector('.profile__edit-button');
-
-export const buttonFormSave = document.querySelector('.popup__button-sumbit_save');
-export const buttonFormAddCard = document.querySelector('.popup__button-sumbit_create');
-
 export const configFormSelector = {
     inputSelector: '.popup__input',
     submitButtonSelector: '.popup__button-sumbit',
