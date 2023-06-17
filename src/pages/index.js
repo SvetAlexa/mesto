@@ -24,42 +24,24 @@ import {
     buttonFormSave,
     buttonFormAddCard
 }
-    from '../scripts/constants.js';
+    from '../scripts/utils/constants.js';
 
 //функция создания новой карточки
 function createCard(data, templateSelector, handleImageClick) {
     const card = new Card(data, templateSelector, handleImageClick);
-    const cardElement = card.generateCard();
-    return cardElement;
+    return card.generateCard();
 }
 
-//отрисовка карточек "из коробки"
-function renderDefaultCards() {
-    const defaultCard = new Section({
+const section = new Section({
         items: initialCards,
         renderer: (item) => {
-            defaultCard.addItem(createCard(item, templateCardElement, handleCardClick), 'append');
+            section.addItem(createCard(item, templateCardElement, handleCardClick), 'append');
         }
     },
         initialCardsContainer
     );
-    defaultCard.renderItems()
-};
 
-renderDefaultCards()
-
-//функция отрисовки карточки от пользователя
-function renderNewCard(data) {
-    const newCard = new Section({
-        items: data,
-        renderer: (item) => {
-            newCard.addItem(createCard(item, templateCardElement, handleCardClick), 'prepend');
-        }
-    },
-        initialCardsContainer
-    );
-    newCard.renderItems()
-};
+section.renderItems();
 
 const popupWithImage = new PopupWithImage(popupOpenImage);
 popupWithImage.setEventListeners();
@@ -80,8 +62,7 @@ const userInfo = new UserInfo({ userNameSelector: '.profile__name', userAboutSel
 const formNewCard = new PopupWithForm({
     popupSelector: popupNewCard,
     handleSubmitForm: (data) => {
-        renderNewCard([data]);
-        formNewCard.close()
+        section.addItem(createCard(data, templateCardElement, handleCardClick), 'prepend')
     }
 })
 formNewCard.setEventListeners();
@@ -91,7 +72,7 @@ formNewCard.setEventListeners();
 buttonAddNewCard.addEventListener('click', function (evt) {
     formNewCardValidation.cleanErrorMessage();
     formNewCard.open();
-    formNewCardValidation.disabledButton(buttonFormAddCard);
+    formNewCardValidation.disabledButton();
 });
 
 const formProfileInfo = new PopupWithForm({
@@ -104,15 +85,16 @@ const formProfileInfo = new PopupWithForm({
 formProfileInfo.setEventListeners();
 
 //внесение данных пользователя со страницы в поля формы
-function setInputValues() {
-    nameInput.value = userInfo.getUserInfo().user;
-    aboutInput.value = userInfo.getUserInfo().about;
+function setInputsFormProfileInfo() {
+    const dataUserProfile = userInfo.getUserInfo()
+    nameInput.value = dataUserProfile.user;
+    aboutInput.value = dataUserProfile.about;
 }
 
 //слушатель кнопки редактирования профиля
 buttonEditProfileInfo.addEventListener('click', function (evt) {
     formProfileInfoValidation.cleanErrorMessage()
     formProfileInfo.open();
-    setInputValues()
-    formProfileInfoValidation.enabledButton(buttonFormSave);
+    setInputsFormProfileInfo()
+    formProfileInfoValidation.enabledButton();
 });

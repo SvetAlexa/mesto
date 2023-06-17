@@ -28,9 +28,9 @@ export const initialCards = [
 export const initialCardsContainer = '.elements__lists';
 export const templateCardElement = '#element-item-template';
 
-export const popupNewCard = document.querySelector('.popup_type_new-card');
-export const popupProfileInfo = document.querySelector('.popup_type_edit');
-export const popupOpenImage = document.querySelector('.popup_type_image');
+export const popupNewCard = '.popup_type_new-card';
+export const popupProfileInfo = '.popup_type_edit';
+export const popupOpenImage = '.popup_type_image';
 
 export const formPopupNewCard = document.querySelector('.popup__form_type_new-card');
 export const formPopupProfileInfo = document.querySelector('.popup__form_type_edit');
@@ -45,10 +45,8 @@ export const buttonFormSave = document.querySelector('.popup__button-sumbit_save
 export const buttonFormAddCard = document.querySelector('.popup__button-sumbit_create');
 
 export const configFormSelector = {
-    formSelector: '.popup__form',
     inputSelector: '.popup__input',
     submitButtonSelector: '.popup__button-sumbit',
     inactiveButtonClass: 'popup__button-sumbit_is-invalid',
-    inputErrorClass: 'popup__input_is-invalid',
-    errorClass: '.error'
+    inputErrorClass: 'popup__input_is-invalid'
 }
