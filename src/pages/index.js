@@ -26,7 +26,7 @@ import {
     buttonAddNewCard,
     buttonEditProfileInfo
 }
-from '../scripts/utils/elements.js'
+    from '../scripts/utils/elements.js'
 
 //функция создания новой карточки
 function createCard(data, templateSelector, handleImageClick) {
@@ -34,16 +34,16 @@ function createCard(data, templateSelector, handleImageClick) {
     return card.generateCard();
 }
 
-const section = new Section({
-        items: initialCards,
-        renderer: (item) => {
-            section.addItem(createCard(item, templateCardElement, handleCardClick), 'append');
-        }
-    },
-        initialCardsContainer
-    );
+const cardSection = new Section({
+    items: initialCards,
+    renderer: (item) => {
+        cardSection.addItem(createCard(item, templateCardElement, handleCardClick), 'append');
+    }
+},
+    initialCardsContainer
+);
 
-section.renderItems();
+cardSection.renderItems();
 
 const popupWithImage = new PopupWithImage(popupOpenImage);
 popupWithImage.setEventListeners();
@@ -64,11 +64,10 @@ const userInfo = new UserInfo({ userNameSelector: '.profile__name', userAboutSel
 const formNewCard = new PopupWithForm({
     popupSelector: popupNewCard,
     handleSubmitForm: (data) => {
-        section.addItem(createCard(data, templateCardElement, handleCardClick), 'prepend')
+        cardSection.addItem(createCard(data, templateCardElement, handleCardClick), 'prepend')
     }
 })
 formNewCard.setEventListeners();
-
 
 //слушатель кнопки добавления новой карточки
 buttonAddNewCard.addEventListener('click', function (evt) {
