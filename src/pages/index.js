@@ -6,6 +6,7 @@ import Section from '../scripts/components/Section.js';
 import PopupWithImage from '../scripts/components/PopupWithImage.js';
 import PopupWithForm from '../scripts/components/PopupWithForm.js';
 import UserInfo from '../scripts/components/UserInfo.js';
+import Api from '../scripts/components/Api';
 
 import {
     initialCards,
@@ -15,6 +16,7 @@ import {
     popupNewCard,
     popupProfileInfo,
     popupOpenImage,
+    config
 }
     from '../scripts/utils/constants.js';
 
@@ -98,3 +100,7 @@ buttonEditProfileInfo.addEventListener('click', function (evt) {
     setInputsFormProfileInfo()
     formProfileInfoValidation.enabledButton();
 });
+
+const api = new Api(config);
+
+api.getInitialCards();
