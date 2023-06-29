@@ -9,7 +9,6 @@ import UserInfo from '../scripts/components/UserInfo.js';
 import Api from '../scripts/components/Api';
 
 import {
-    initialCards,
     initialCardsContainer,
     configFormSelector,
     templateCardElement,
@@ -31,28 +30,24 @@ import {
     from '../scripts/utils/elements.js'
 
 //функция создания новой карточки
-function createCard(data, templateSelector, handleImageClick) {
-    const card = new Card(data, templateSelector, handleImageClick);
+function createCard(data, handleImageClick, templateSelector) {
+    const card = new Card(data, handleImageClick, templateSelector);
     return card.generateCard();
 }
 
-const cardSection = new Section({
-    items: initialCards,
-    renderer: (item) => {
-        cardSection.addItem(createCard(item, templateCardElement, handleCardClick), 'append');
-    }
-},
-    initialCardsContainer
-);
+const cardSection = new Section(renderCard, initialCardsContainer);
 
-cardSection.renderItems();
+function renderCard(data) {
+    cardSection.addItem(createCard({ data, handleImageClick }, templateCardElement), 'append');
+ }
 
 const popupWithImage = new PopupWithImage(popupOpenImage);
 popupWithImage.setEventListeners();
 
 //обработчик открытия попапа по картинке
-function handleCardClick(title, link) {
-    popupWithImage.open(title, link)
+function handleImageClick(data) {
+    console.log(data)
+    popupWithImage.open(data)
 };
 
 const formNewCardValidation = new FormValidator(configFormSelector, formPopupNewCard);
@@ -66,7 +61,7 @@ const userInfo = new UserInfo({ userNameSelector: '.profile__name', userAboutSel
 const formNewCard = new PopupWithForm({
     popupSelector: popupNewCard,
     handleSubmitForm: (data) => {
-        cardSection.addItem(createCard(data, templateCardElement, handleCardClick), 'prepend')
+        cardSection.addItem(createCard(data, templateCardElement, handleImageClick), 'prepend')
     }
 })
 formNewCard.setEventListeners();
@@ -86,13 +81,6 @@ const formProfileInfo = new PopupWithForm({
 })
 formProfileInfo.setEventListeners();
 
-// //внесение данных пользователя со страницы в поля формы
-// function setInputsFormProfileInfo() {
-//     const dataUserProfile = userInfo.getUserInfo();
-//     nameInput.value = dataUserProfile.user;
-//     aboutInput.value = dataUserProfile.about;
-// }
-
 //слушатель кнопки редактирования профиля
 buttonEditProfileInfo.addEventListener('click', function (evt) {
     formProfileInfoValidation.cleanErrorMessage()
@@ -103,4 +91,15 @@ buttonEditProfileInfo.addEventListener('click', function (evt) {
 
 const api = new Api(config);
 
-api.getInitialCards();
+api.getInitialCards()
+    .then(result => {
+        // console.log(result);
+        // console.log(result.forEach(item => {
+        //     console.log(item)
+        // })
+        // )
+        cardSection.renderItems(result)
+    })
+// .catch((err) => {
+//     console.log(err);
+// })

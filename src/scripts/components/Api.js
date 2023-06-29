@@ -6,12 +6,14 @@ export default class Api {
 
     getInitialCards() {
         return fetch(`${this._url}/cards`, {
+            method: 'GET',
             headers: this._headers
         })
-            .then(res => res.json())
-            .then((result) => {
-                console.log(result);
-            })
-        }
+            .then(res => {
+                if (res.ok) {
+                    return res.json();
+                }
+                return Promise.reject(`Ошибка': ${res.status}`);
+            });
+    }
 }
-
