@@ -86,18 +86,18 @@ const formProfileInfo = new PopupWithForm({
 })
 formProfileInfo.setEventListeners();
 
-//внесение данных пользователя со страницы в поля формы
-function setInputsFormProfileInfo() {
-    const dataUserProfile = userInfo.getUserInfo();
-    nameInput.value = dataUserProfile.user;
-    aboutInput.value = dataUserProfile.about;
-}
+// //внесение данных пользователя со страницы в поля формы
+// function setInputsFormProfileInfo() {
+//     const dataUserProfile = userInfo.getUserInfo();
+//     nameInput.value = dataUserProfile.user;
+//     aboutInput.value = dataUserProfile.about;
+// }
 
 //слушатель кнопки редактирования профиля
 buttonEditProfileInfo.addEventListener('click', function (evt) {
     formProfileInfoValidation.cleanErrorMessage()
     formProfileInfo.open();
-    setInputsFormProfileInfo()
+    formProfileInfo.setInputValues(userInfo.getUserInfo());
     formProfileInfoValidation.enabledButton();
 });
 
