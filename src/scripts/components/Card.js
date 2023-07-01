@@ -1,8 +1,14 @@
+import defaultImage from '../../images/defaultImage.jpg'
+import defaultPhoto from '../../images/defaultPhoto.jpg'
+
 export default class Card {
-    constructor({ data, handleCardClick }, templateSelector) {
+    constructor({ data, handleErrorImage, handleImageClick, }, templateSelector) {
         this._name = data.name;
         this._link = data.link;
-        this._handleCardClick = handleCardClick;
+        //this._handleLikeClick = handleLikeClick;
+        this._handleErrorImage = handleErrorImage;
+        this._handleImageClick = handleImageClick;
+        //this._handleRemoveButtonClick = handleRemoveButtonClick;
         this._templateSelector = templateSelector;
     }
 
@@ -31,10 +37,13 @@ export default class Card {
         this._element.querySelector('.element__delete').addEventListener('click', () => {
             this._handleRemoveButtonClick();
         })
+        this._cardImage.addEventListener('error', () => {
+            this._handleErrorImage();
+            this._cardImage.src = defaultImage;
+            console.log('ошибка при загрузки картинки', this._link)
+        })
         this._cardImage.addEventListener('click', () => {
-            console.log(this._name)
-            console.log(typeof this._name)
-            this._handleImageClick([this._name, this._link]);
+            this._handleImageClick();
         })
     }
 
@@ -43,11 +52,15 @@ export default class Card {
         this._cardImage = this._element.querySelector('.element__image');
         this._cardTitle = this._element.querySelector('.element__title');
 
-        this._setEventListeners();
-
         this._cardTitle.textContent = this._name;
         this._cardImage.alt = this._name;
         this._cardImage.src = this._link;
+
+
+
+
+
+        this._setEventListeners();
 
         return this._element;
     }
