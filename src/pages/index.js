@@ -48,37 +48,27 @@ function createCard(item, templateSelector) {
                 popupWithImage.open(item);
             },
             handleRemoveButtonClick: (card) => {
-
-                console.log(card.getCardId());
                 api.removeCard(card.getCardId())
                     .then(() => card.removeCard())
-                    .catch((err) => console.log('Произошла ошибка', err))
+                    .catch((err) => console.log('Произошла ошибка:', err))
             },
             handleLikeClick: (instance) => {
-               // console.log(instance);
                 api.swapLike(instance.getCardId(), instance.isLiked())
-                .then(cardData => {
-                    console.log(instance.getCardId())
-                    instance.setDataLikes(cardData)
-                    console.log('старые данные', instance._data),
-                    console.log('новые данные', cardData)
-                })
+                    .then(cardData => {
+                        instance.setDataLikes(cardData)
+                    })
             }
         },
         templateSelector)
+    const cardElement = card.generateCard();
+    card.swapTrashButton(card.checkUserId());
 
-    return card.generateCard();
+    return cardElement;
 }
-
-
 
 const cardSection = new Section(
     {
         renderer: (item) => {
-            // const status = (item. owner._id === userId)
-            // console.log(status)
-            // // console.log(item. owner._id)
-            // // console.log(userId)
             cardSection.addItem(createCard(item, templateCardElement), 'append');
         }
     },
@@ -116,6 +106,7 @@ const formNewCard = new PopupWithForm({
         api.createNewCard(data)
             .then(function (dataFromServer) {
                 console.log(data)
+                console.log(dataFromServer)
                 cardSection.addItem(createCard(dataFromServer, templateCardElement), 'prepend')
             })
         //.catch()

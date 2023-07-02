@@ -48,9 +48,6 @@ export default class Card {
 
     isLiked() {
         return this._data.likes.some((item) => {
-            console.log(item._id)
-            console.log(this._userId)
-            console.log(item._id === this._userId)
             return item._id === this._userId;
         })
     }
@@ -63,7 +60,6 @@ export default class Card {
         } else {
             this._likeButton.classList.remove('element__likes_is_active');
         }
-        console.log('OOOOPS')
     }
 
     setDataLikes(data) {
@@ -77,6 +73,7 @@ export default class Card {
         this._cardTitle = this._element.querySelector('.element__title');
         this._cardLikeCounter = this._element.querySelector('.element__likes-counter');
         this._likeButton = this._element.querySelector('.element__likes');
+        this._trashButton = this._element.querySelector('.element__delete');
 
         this._cardTitle.textContent = this._name;
         this._cardImage.alt = this._name;
@@ -90,12 +87,15 @@ export default class Card {
     }
 
     getCardId() {
-        console.log(this._data._id)
         return this._data._id;
     }
 
     checkUserId() {
-        console.log((this._userId === this._data.owner._id));
         return (this._userId === this._data.owner._id)
+    }
+
+    swapTrashButton(status) {
+        if (!status)
+            this._trashButton.remove();
     }
 }
