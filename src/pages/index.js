@@ -33,12 +33,14 @@ import {
 
 const api = new Api(config);
 
+let userId;
 
 //функция создания новой карточки
 function createCard(item, templateSelector) {
     const card = new Card(
         {
             data: item,
+            userId: userId,
             handleErrorImage: () => {
                 item.link = defaultImage;
             },
@@ -47,20 +49,36 @@ function createCard(item, templateSelector) {
             },
             handleRemoveButtonClick: (card) => {
 
-                console.log(card.getId());
-                api.removeCard(card.getId())
+                console.log(card.getCardId());
+                api.removeCard(card.getCardId())
                     .then(() => card.removeCard())
                     .catch((err) => console.log('Произошла ошибка', err))
+            },
+            handleLikeClick: (instance) => {
+               // console.log(instance);
+                api.swapLike(instance.getCardId(), instance.isLiked())
+                .then(cardData => {
+                    console.log(instance.getCardId())
+                    instance.setDataLikes(cardData)
+                    console.log('старые данные', instance._data),
+                    console.log('новые данные', cardData)
+                })
             }
         },
         templateSelector)
+
     return card.generateCard();
 }
-console.log(createCard)
+
+
 
 const cardSection = new Section(
     {
         renderer: (item) => {
+            // const status = (item. owner._id === userId)
+            // console.log(status)
+            // // console.log(item. owner._id)
+            // // console.log(userId)
             cardSection.addItem(createCard(item, templateCardElement), 'append');
         }
     },
@@ -100,7 +118,7 @@ const formNewCard = new PopupWithForm({
                 console.log(data)
                 cardSection.addItem(createCard(dataFromServer, templateCardElement), 'prepend')
             })
-            //.catch()
+        //.catch()
     }
 })
 formNewCard.setEventListeners();
@@ -140,9 +158,11 @@ api.getAllInfo()
     .then(([userData, cardArray]) => {
         userInfo.setUserInfo(userData);
         userInfo.setAvatarImage(userData);
+        userId = userData._id;
+        console.log(userId);
         console.log(userData);
         console.log(cardArray);
-        cardSection.renderItems(cardArray)
+        cardSection.renderItems(cardArray);
     })
     .catch((err) => {
         console.log('Произошла ошибка', err);

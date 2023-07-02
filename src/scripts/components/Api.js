@@ -48,4 +48,29 @@ export default class Api {
         })
         .then(this._onResponse)
     }
+
+    swapLike(cardId, statusIsLiked) {
+        return fetch(`${this._url}/cards/${cardId}/likes`, {
+            method: statusIsLiked ? 'DELETE' : 'PUT',
+            headers: this._headers,
+            //body: JSON.stringify(cardId)
+        })
+        .then(this._onResponse)
+    }
+
+    addLike(cardId) {
+        return fetch(`${this._url}/cards/${cardId}/likes`, {
+            method: 'PUT',
+            headers: this._headers
+        })
+        .then(this._onResponse)
+    }
+
+    removeLike(cardId) {
+        return fetch(`${this._url}/cards/${cardId}/likes`, {
+            method: 'DELETE',
+            headers: this._headers
+        })
+        .then(this._onResponse)
+    }
 }

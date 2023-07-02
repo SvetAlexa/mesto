@@ -9,16 +9,26 @@ export default class Section {
         switch (position) {
             case 'append':
                 this._container.append(elementNode);
-    
+                // if (status) {
+                //     document.querySelector('.element__delete').remove()
+                //     console.log(document.querySelector('.element__delete'))
+                // } else {
+                //     console.log('моя карточка')
+                // }
                 break;
             case 'prepend':
                 this._container.prepend(elementNode);
+                // if (status) {
+                //     this._container.querySelector('.element__delete').remove()
+                // } else {
+                //     console.log('моя карточка')
+                // }
                 break;
         }
-        return this._container
+        //return this._container
     }
 
     renderItems(cardsArray) {
-        cardsArray.forEach(this._renderer)
+        cardsArray.forEach(this._renderer);
     }
 }
