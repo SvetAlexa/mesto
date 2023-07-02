@@ -1,14 +1,14 @@
 import defaultImage from '../../images/defaultImage.jpg'
-import defaultPhoto from '../../images/defaultPhoto.jpg'
 
 export default class Card {
-    constructor({ data, handleErrorImage, handleImageClick, }, templateSelector) {
+    constructor({ data, handleErrorImage, handleImageClick, handleRemoveButtonClick }, templateSelector) {
+        this._data = data;
         this._name = data.name;
         this._link = data.link;
         //this._handleLikeClick = handleLikeClick;
         this._handleErrorImage = handleErrorImage;
         this._handleImageClick = handleImageClick;
-        //this._handleRemoveButtonClick = handleRemoveButtonClick;
+        this._handleRemoveButtonClick = handleRemoveButtonClick;
         this._templateSelector = templateSelector;
     }
 
@@ -23,9 +23,14 @@ export default class Card {
         this._likeButton.classList.toggle('element__likes_is_active');
     }
 
-    //обработчик кнопки удаления карточки
-    _handleRemoveButtonClick() {
+    // //обработчик кнопки удаления карточки
+    removeCard() {
         this._element.remove();
+        this._element = 'null';
+    }
+
+    showRemoveButton() {
+        cardElement.classList.add('element__delete_is_active');
     }
 
     _setEventListeners() {
@@ -35,7 +40,7 @@ export default class Card {
             this._handleLikeClick();
         })
         this._element.querySelector('.element__delete').addEventListener('click', () => {
-            this._handleRemoveButtonClick();
+            this._handleRemoveButtonClick(this);
         })
         this._cardImage.addEventListener('error', () => {
             this._handleErrorImage();
@@ -56,12 +61,12 @@ export default class Card {
         this._cardImage.alt = this._name;
         this._cardImage.src = this._link;
 
-
-
-
-
         this._setEventListeners();
 
         return this._element;
+    }
+
+    getId() {
+        return this._data._id;
     }
 }

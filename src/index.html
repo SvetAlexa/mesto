@@ -14,13 +14,13 @@
         </header>
         <main class="main">
             <section class="profile page__container-profile">
-                <img class="profile__avatar" src="<%=require('./images/avatar.jpg')%>" alt="фотография профиля">
+                <img class="profile__avatar" src="#" alt="фотография профиля">
                 <div class="profile__info">
                     <div class="profile__name-container">
-                        <h1 class="profile__name">Жак-Ив Кусто</h1>
+                        <h1 class="profile__name"></h1>
                         <button type="button" class="profile__edit-button"></button>
                     </div>
-                    <p class="profile__activity">Исследователь океана</p>
+                    <p class="profile__activity"></p>
                 </div>
                 <button type="button" class="profile__add-button"></button>
             </section>
@@ -64,9 +64,9 @@
             <form name="popup-form" class="popup__form popup__form_type_edit">
                 <ul class="popup__input-list">
                     <li class="popup__input-item">
-                        <input type="text" name="user" placeholder="Ваше имя" minlength="2" maxlength="40" required
+                        <input type="text" name="name" placeholder="Ваше имя" minlength="2" maxlength="40" required
                             class="popup__input popup__input_value_name">
-                        <span class="error" id="user-error"></span>
+                        <span class="error" id="name-error"></span>
                     </li>
                     <li>
                         <input type="text" name="about" placeholder="Ваше занятие" minlength="2" maxlength="200"

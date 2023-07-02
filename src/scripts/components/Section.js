@@ -9,19 +9,16 @@ export default class Section {
         switch (position) {
             case 'append':
                 this._container.append(elementNode);
+    
                 break;
             case 'prepend':
                 this._container.prepend(elementNode);
                 break;
         }
+        return this._container
     }
 
     renderItems(cardsArray) {
-        console.log(cardsArray)
-
-        cardsArray.forEach(item => {
-            this._renderer(item)
-        })
-
-    };
-} 
+        cardsArray.forEach(this._renderer)
+    }
+}

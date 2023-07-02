@@ -33,6 +33,7 @@ import {
 
 const api = new Api(config);
 
+
 //функция создания новой карточки
 function createCard(item, templateSelector) {
     const card = new Card(
@@ -44,15 +45,23 @@ function createCard(item, templateSelector) {
             handleImageClick: () => {
                 popupWithImage.open(item);
             },
+            handleRemoveButtonClick: (card) => {
+
+                console.log(card.getId());
+                api.removeCard(card.getId())
+                    .then(() => card.removeCard())
+                    .catch((err) => console.log('Произошла ошибка', err))
+            }
         },
-        templateSelector);
+        templateSelector)
     return card.generateCard();
 }
+console.log(createCard)
 
 const cardSection = new Section(
     {
         renderer: (item) => {
-            cardSection.addItem(createCard(item, templateCardElement), 'append')
+            cardSection.addItem(createCard(item, templateCardElement), 'append');
         }
     },
     initialCardsContainer)
@@ -86,7 +95,12 @@ const userInfo = new UserInfo({
 const formNewCard = new PopupWithForm({
     popupSelector: popupNewCard,
     handleSubmitForm: (data) => {
-        cardSection.addItem(createCard(data, { handleLikeClick, handleImageClick, handleRemoveButtonClick }, templateCardElement), 'prepend')
+        api.createNewCard(data)
+            .then(function (dataFromServer) {
+                console.log(data)
+                cardSection.addItem(createCard(dataFromServer, templateCardElement), 'prepend')
+            })
+            //.catch()
     }
 })
 formNewCard.setEventListeners();
@@ -131,6 +145,6 @@ api.getAllInfo()
         cardSection.renderItems(cardArray)
     })
     .catch((err) => {
-        console.log('Ошибка', err);
+        console.log('Произошла ошибка', err);
     })
 
