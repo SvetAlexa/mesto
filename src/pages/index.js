@@ -123,8 +123,16 @@ buttonAddNewCard.addEventListener('click', function (evt) {
 
 const formProfileInfo = new PopupWithForm({
     popupSelector: popupProfileInfo,
-    handleSubmitForm: (dataInput) => {
-        userInfo.setUserInfo(dataInput);
+    handleSubmitForm: (data) => {
+        api.editUserInfo(data)
+            .then(function (dataFromServer) {
+               userInfo.setUserInfo(dataFromServer);
+               console.log(data)
+               console.log(dataFromServer)
+            })
+            .catch((err) => {
+                console.log('Произошла ошибка', err);
+            })
     }
 })
 formProfileInfo.setEventListeners();

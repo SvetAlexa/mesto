@@ -52,8 +52,7 @@ export default class Api {
     swapLike(cardId, statusIsLiked) {
         return fetch(`${this._url}/cards/${cardId}/likes`, {
             method: statusIsLiked ? 'DELETE' : 'PUT',
-            headers: this._headers,
-            //body: JSON.stringify(cardId)
+            headers: this._headers
         })
         .then(this._onResponse)
     }
@@ -70,6 +69,15 @@ export default class Api {
         return fetch(`${this._url}/cards/${cardId}/likes`, {
             method: 'DELETE',
             headers: this._headers
+        })
+        .then(this._onResponse)
+    }
+
+    editUserInfo(data) {
+        return fetch(`${this._url}/users/me`, {
+            method: 'PATCH',
+            headers: this._headers,
+            body: JSON.stringify(data)
         })
         .then(this._onResponse)
     }
