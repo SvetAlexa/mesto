@@ -12,11 +12,6 @@ export default class Section {
                 break;
             case 'prepend':
                 this._container.prepend(elementNode);
-                // if (status) {
-                //     this._container.querySelector('.element__delete').remove()
-                // } else {
-                //     console.log('моя карточка')
-                // }
                 break;
         }
     }

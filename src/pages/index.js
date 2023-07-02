@@ -7,6 +7,7 @@ import FormValidator from '../scripts/components/FormValidator.js';
 import Section from '../scripts/components/Section.js';
 import PopupWithImage from '../scripts/components/PopupWithImage.js';
 import PopupWithForm from '../scripts/components/PopupWithForm.js';
+import PopupWithConfirmation from '../scripts/components/PopupWithConfirmation.js';
 import UserInfo from '../scripts/components/UserInfo.js';
 import Api from '../scripts/components/Api';
 
@@ -17,6 +18,7 @@ import {
     popupNewCard,
     popupProfileInfo,
     popupOpenImage,
+    popupConfirmationDelete,
     config
 }
     from '../scripts/utils/constants.js';
@@ -48,9 +50,7 @@ function createCard(item, templateSelector) {
                 popupWithImage.open(item);
             },
             handleRemoveButtonClick: (card) => {
-                api.removeCard(card.getCardId())
-                    .then(() => card.removeCard())
-                    .catch((err) => console.log('Произошла ошибка:', err))
+                popupWithConfirmation.open(card);
             },
             handleLikeClick: (instance) => {
                 api.swapLike(instance.getCardId(), instance.isLiked())
@@ -74,19 +74,19 @@ const cardSection = new Section(
     },
     initialCardsContainer)
 
-// function renderCard({ data, position = 'prepend' }) {
-//     cardSection.addItem(createCard({ data, handleImageClick }, templateCardElement), position);
-//     console.log(createCard({ data, handleImageClick }, templateCardElement))
-// }
-
 const popupWithImage = new PopupWithImage(popupOpenImage);
 popupWithImage.setEventListeners();
 
-//обработчик открытия попапа по картинке
-// function handleImageClick(data) {
-//     console.log(data)
-//     popupWithImage.open(data)
-// };
+const popupWithConfirmation = new PopupWithConfirmation(popupConfirmationDelete,
+    {
+        handleConfirmationDelete: (card) => {
+            api.removeCard(card._data._id)
+                .then(() => card.removeCard())
+                .catch((err) => console.log('Произошла ошибка:', err))
+        },
+    }
+);
+popupWithConfirmation.setEventListeners();
 
 const formNewCardValidation = new FormValidator(configFormSelector, formPopupNewCard);
 const formProfileInfoValidation = new FormValidator(configFormSelector, formPopupProfileInfo);
@@ -136,14 +136,6 @@ buttonEditProfileInfo.addEventListener('click', function (evt) {
     formProfileInfo.setInputValues(userInfo.getUserInfo());
     formProfileInfoValidation.enabledButton();
 });
-
-// const cardSection = new Section({
-//     renderer: (item) => {
-//         cardSection.addItem(createCard(item, {  handleImageClick, }, templateCardElement), 'append');
-//     }
-// },
-//     initialCardsContainer
-// );
 
 api.getAllInfo()
     .then(([userData, cardArray]) => {

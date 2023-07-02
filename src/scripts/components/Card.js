@@ -19,12 +19,10 @@ export default class Card {
         return cardElement;
     }
 
-    //обработчик лайка карточки
     _handleLikeClick() {
         this._likeButton.classList.toggle('element__likes_is_active');
     }
 
-    // //обработчик кнопки удаления карточки
     removeCard() {
         this._element.remove();
         this._element = 'null';

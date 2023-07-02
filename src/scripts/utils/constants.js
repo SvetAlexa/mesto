@@ -4,6 +4,7 @@ export const templateCardElement = '#element-item-template';
 export const popupNewCard = '.popup_type_new-card';
 export const popupProfileInfo = '.popup_type_edit';
 export const popupOpenImage = '.popup_type_image';
+export const popupConfirmationDelete = '.popup_type_delete';
 
 export const configFormSelector = {
     inputSelector: '.popup__input',
