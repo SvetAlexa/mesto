@@ -81,4 +81,14 @@ export default class Api {
         })
         .then(this._onResponse)
     }
+
+    editAvatarPhoto(data){
+        return fetch(`${this._url}/users/me/avatar`, {
+            method: 'PATCH',
+            headers: this._headers,
+            body: JSON.stringify(data)
+        })
+        .then(this._onResponse)
+    }
+
 }

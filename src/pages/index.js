@@ -19,6 +19,7 @@ import {
     popupProfileInfo,
     popupOpenImage,
     popupConfirmationDelete,
+    popupProfileAvatar,
     config
 }
     from '../scripts/utils/constants.js';
@@ -26,10 +27,12 @@ import {
 import {
     formPopupNewCard,
     formPopupProfileInfo,
+    formPopupAvatarPhoto,
     nameInput,
     aboutInput,
     buttonAddNewCard,
-    buttonEditProfileInfo
+    buttonEditProfileInfo,
+    buttonEditAvatarPhoto
 }
     from '../scripts/utils/elements.js'
 
@@ -90,9 +93,11 @@ popupWithConfirmation.setEventListeners();
 
 const formNewCardValidation = new FormValidator(configFormSelector, formPopupNewCard);
 const formProfileInfoValidation = new FormValidator(configFormSelector, formPopupProfileInfo);
+const formProfileAvatarValidation = new FormValidator(configFormSelector, formPopupAvatarPhoto);
 
 formNewCardValidation.enableValidation();
 formProfileInfoValidation.enableValidation();
+formProfileAvatarValidation.enableValidation();
 
 const userInfo = new UserInfo({
     userNameSelector: '.profile__name',
@@ -126,9 +131,9 @@ const formProfileInfo = new PopupWithForm({
     handleSubmitForm: (data) => {
         api.editUserInfo(data)
             .then(function (dataFromServer) {
-               userInfo.setUserInfo(dataFromServer);
-               console.log(data)
-               console.log(dataFromServer)
+                userInfo.setUserInfo(dataFromServer);
+                console.log(data)
+                console.log(dataFromServer)
             })
             .catch((err) => {
                 console.log('Произошла ошибка', err);
@@ -137,6 +142,7 @@ const formProfileInfo = new PopupWithForm({
 })
 formProfileInfo.setEventListeners();
 
+
 //слушатель кнопки редактирования профиля
 buttonEditProfileInfo.addEventListener('click', function (evt) {
     formProfileInfoValidation.cleanErrorMessage()
@@ -144,6 +150,26 @@ buttonEditProfileInfo.addEventListener('click', function (evt) {
     formProfileInfo.setInputValues(userInfo.getUserInfo());
     formProfileInfoValidation.enabledButton();
 });
+
+const formUpdatedAvatar = new PopupWithForm({
+    popupSelector: popupProfileAvatar,
+    handleSubmitForm: (data) => {
+        api.editAvatarPhoto(data)
+            .then(function (dataFromServer) {
+                console.log(data)
+                console.log(dataFromServer)
+                userInfo.setAvatarImage(dataFromServer);
+            })
+    }
+})
+formUpdatedAvatar.setEventListeners();
+
+//слушатель кнопки редактирования аватара
+buttonEditAvatarPhoto.addEventListener('click', () => {
+    formProfileAvatarValidation.cleanErrorMessage()
+    formUpdatedAvatar.open();
+    formProfileAvatarValidation.disabledButton();
+})
 
 api.getAllInfo()
     .then(([userData, cardArray]) => {
