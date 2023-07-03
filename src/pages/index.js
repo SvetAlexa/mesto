@@ -12,24 +12,22 @@ import UserInfo from '../scripts/components/UserInfo.js';
 import Api from '../scripts/components/Api';
 
 import {
-    initialCardsContainer,
     configFormSelector,
+    config
+}
+    from '../scripts/utils/constants.js';
+
+import {
+    initialCardsContainer,
     templateCardElement,
     popupNewCard,
     popupProfileInfo,
     popupOpenImage,
     popupConfirmationDelete,
     popupProfileAvatar,
-    config
-}
-    from '../scripts/utils/constants.js';
-
-import {
     formPopupNewCard,
     formPopupProfileInfo,
     formPopupAvatarPhoto,
-    nameInput,
-    aboutInput,
     buttonAddNewCard,
     buttonEditProfileInfo,
     buttonEditAvatarPhoto
@@ -60,9 +58,12 @@ function createCard(item, templateSelector) {
                     .then(cardData => {
                         instance.setDataLikes(cardData)
                     })
-            }
-        },
-        templateSelector)
+                    .catch((err) => {
+                        console.log('Произошла ошибка', err)
+                    })
+            },
+            templateSelector
+        })
     const cardElement = card.generateCard();
     card.swapTrashButton(card.checkUserId());
 
@@ -78,6 +79,7 @@ const cardSection = new Section(
     initialCardsContainer)
 
 const popupWithImage = new PopupWithImage(popupOpenImage);
+
 popupWithImage.setEventListeners();
 
 const popupWithConfirmation = new PopupWithConfirmation(popupConfirmationDelete,
@@ -85,10 +87,13 @@ const popupWithConfirmation = new PopupWithConfirmation(popupConfirmationDelete,
         handleConfirmationDelete: (card) => {
             api.removeCard(card._data._id)
                 .then(() => card.removeCard())
-                .catch((err) => console.log('Произошла ошибка:', err))
+                .catch((err) => {
+                    console.log('Произошла ошибка', err)
+                })
         },
     }
 );
+
 popupWithConfirmation.setEventListeners();
 
 const formNewCardValidation = new FormValidator(configFormSelector, formPopupNewCard);
@@ -108,15 +113,20 @@ const userInfo = new UserInfo({
 const formNewCard = new PopupWithForm({
     popupSelector: popupNewCard,
     handleSubmitForm: (data) => {
+        formNewCard.swapButtonSubmitText('Сохранение...');
         api.createNewCard(data)
             .then(function (dataFromServer) {
-                console.log(data)
-                console.log(dataFromServer)
-                cardSection.addItem(createCard(dataFromServer, templateCardElement), 'prepend')
+                cardSection.addItem(createCard(dataFromServer, templateCardElement), 'prepend');
             })
-        //.catch()
+            .catch((err) => {
+                console.log('Произошла ошибка', err);
+            })
+            .finally(() => {
+                formNewCard.swapButtonSubmitText('Создать');
+            })
     }
 })
+
 formNewCard.setEventListeners();
 
 //слушатель кнопки добавления новой карточки
@@ -129,17 +139,20 @@ buttonAddNewCard.addEventListener('click', function (evt) {
 const formProfileInfo = new PopupWithForm({
     popupSelector: popupProfileInfo,
     handleSubmitForm: (data) => {
+        formProfileInfo.swapButtonSubmitText('Сохранение...');
         api.editUserInfo(data)
             .then(function (dataFromServer) {
                 userInfo.setUserInfo(dataFromServer);
-                console.log(data)
-                console.log(dataFromServer)
             })
             .catch((err) => {
                 console.log('Произошла ошибка', err);
             })
+            .finally(() => {
+                formProfileInfo.swapButtonSubmitText('Сохранить');
+            })
     }
 })
+
 formProfileInfo.setEventListeners();
 
 
@@ -154,21 +167,28 @@ buttonEditProfileInfo.addEventListener('click', function (evt) {
 const formUpdatedAvatar = new PopupWithForm({
     popupSelector: popupProfileAvatar,
     handleSubmitForm: (data) => {
+        formUpdatedAvatar.swapButtonSubmitText('Сохранение...');
         api.editAvatarPhoto(data)
             .then(function (dataFromServer) {
-                console.log(data)
-                console.log(dataFromServer)
                 userInfo.setAvatarImage(dataFromServer);
+            })
+            .catch((err) => {
+                console.log('Произошла ошибка', err);
+            })
+            .finally(() => {
+                formUpdatedAvatar.swapButtonSubmitText('Сохранить');
             })
     }
 })
+
 formUpdatedAvatar.setEventListeners();
 
 //слушатель кнопки редактирования аватара
 buttonEditAvatarPhoto.addEventListener('click', () => {
     formProfileAvatarValidation.cleanErrorMessage()
     formUpdatedAvatar.open();
-    formProfileAvatarValidation.disabledButton();
+    formUpdatedAvatar.setInputValues(userInfo.getAvatarInfo());
+    formProfileAvatarValidation.enabledButton();
 })
 
 api.getAllInfo()
@@ -176,12 +196,8 @@ api.getAllInfo()
         userInfo.setUserInfo(userData);
         userInfo.setAvatarImage(userData);
         userId = userData._id;
-        console.log(userId);
-        console.log(userData);
-        console.log(cardArray);
         cardSection.renderItems(cardArray);
     })
     .catch((err) => {
         console.log('Произошла ошибка', err);
     })
-
