@@ -61,9 +61,9 @@ function createCard(item, templateSelector) {
                     .catch((err) => {
                         console.log('Произошла ошибка', err)
                     })
-            },
-            templateSelector
-        })
+            }
+        },
+            templateSelector)
     const cardElement = card.generateCard();
     card.swapTrashButton(card.checkUserId());
 
