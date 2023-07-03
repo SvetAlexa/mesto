@@ -16,7 +16,6 @@ export default class PopupWithForm extends Popup {
     }
 
     swapButtonSubmitText(text) {
-        console.log(this._buttonSubmit)
         this._buttonSubmit.textContent = text;
     }
 

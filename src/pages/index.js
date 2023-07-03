@@ -139,6 +139,7 @@ buttonAddNewCard.addEventListener('click', function (evt) {
 const formProfileInfo = new PopupWithForm({
     popupSelector: popupProfileInfo,
     handleSubmitForm: (data) => {
+        data.name = data.user
         formProfileInfo.swapButtonSubmitText('Сохранение...');
         api.editUserInfo(data)
             .then(function (dataFromServer) {
