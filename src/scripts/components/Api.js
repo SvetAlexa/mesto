@@ -24,7 +24,7 @@ export default class Api {
             method: 'GET',
             headers: this._headers
         })
-        .then(this._onResponse)
+            .then(this._onResponse)
     }
 
 
@@ -38,7 +38,7 @@ export default class Api {
             headers: this._headers,
             body: JSON.stringify(dataCard)
         })
-        .then(this._onResponse)
+            .then(this._onResponse)
     }
 
     removeCard(cardId) {
@@ -46,7 +46,7 @@ export default class Api {
             method: 'DELETE',
             headers: this._headers
         })
-        .then(this._onResponse)
+            .then(this._onResponse)
     }
 
     swapLike(cardId, statusIsLiked) {
@@ -54,7 +54,7 @@ export default class Api {
             method: statusIsLiked ? 'DELETE' : 'PUT',
             headers: this._headers
         })
-        .then(this._onResponse)
+            .then(this._onResponse)
     }
 
     addLike(cardId) {
@@ -62,7 +62,7 @@ export default class Api {
             method: 'PUT',
             headers: this._headers
         })
-        .then(this._onResponse)
+            .then(this._onResponse)
     }
 
     removeLike(cardId) {
@@ -70,7 +70,7 @@ export default class Api {
             method: 'DELETE',
             headers: this._headers
         })
-        .then(this._onResponse)
+            .then(this._onResponse)
     }
 
     editUserInfo(data) {
@@ -79,16 +79,16 @@ export default class Api {
             headers: this._headers,
             body: JSON.stringify(data)
         })
-        .then(this._onResponse)
+            .then(this._onResponse)
     }
 
-    editAvatarPhoto(data){
+    editAvatarPhoto(data) {
         return fetch(`${this._url}/users/me/avatar`, {
             method: 'PATCH',
             headers: this._headers,
             body: JSON.stringify(data)
         })
-        .then(this._onResponse)
+            .then(this._onResponse)
     }
 
 }

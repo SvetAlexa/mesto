@@ -4,7 +4,7 @@ export default class PopupWithForm extends Popup {
     constructor({ popupSelector, handleSubmitForm }) {
         super(popupSelector);
         this._handleSubmitForm = handleSubmitForm;
-        
+
         this._formElement = this._popupSelector.querySelector('.popup__form');
         this._inputList = this._popupSelector.querySelectorAll('.popup__input');
         this._buttonSubmit = this._popupSelector.querySelector('.popup__button-sumbit');
@@ -33,7 +33,7 @@ export default class PopupWithForm extends Popup {
         this._inputList.forEach((input) => {
             input.value = data[input.name];
         })
-        
+
     }
 
     setEventListeners() {

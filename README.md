@@ -13,7 +13,8 @@
 * Реализована лайв-валидация форм
 * Код разделен на модули с использованием ***ООП***
 * Проект собирается с помощью ***Webpack***
+* Настроены HTTP-запросы к удаленному серверу
 
 ## Контакты
 
-Посмотреть страницу можно [тут](https://svetalexa.github.io/mesto/ "https://svetalexa.github.io/mesto/")
+Посмотреть сайт можно [тут](https://svetalexa.github.io/mesto/ "https://svetalexa.github.io/mesto/")
