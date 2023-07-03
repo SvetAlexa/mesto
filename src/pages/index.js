@@ -63,7 +63,7 @@ function createCard(item, templateSelector) {
                     })
             }
         },
-            templateSelector)
+        templateSelector)
     const cardElement = card.generateCard();
     card.swapTrashButton(card.checkUserId());
 
