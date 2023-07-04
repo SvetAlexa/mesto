@@ -48,10 +48,10 @@ function createCard(item, templateSelector) {
                 item.link = defaultImage;
             },
             handleImageClick: () => {
-                popupWithImage.open(item);
+                imagePopup.open(item);
             },
             handleRemoveButtonClick: (card) => {
-                popupWithConfirmation.open(card);
+                confirmationPopup.open(card);
             },
             handleLikeClick: (instance) => {
                 api.swapLike(instance.getCardId(), instance.isLiked())
@@ -78,17 +78,17 @@ const cardSection = new Section(
     },
     initialCardsContainer)
 
-const popupWithImage = new PopupWithImage(popupOpenImage);
+const imagePopup = new PopupWithImage(popupOpenImage);
 
-popupWithImage.setEventListeners();
+imagePopup.setEventListeners();
 
-const popupWithConfirmation = new PopupWithConfirmation(popupConfirmationDelete,
+const confirmationPopup = new PopupWithConfirmation(popupConfirmationDelete,
     {
         handleConfirmationDelete: (card) => {
             api.removeCard(card.data._id)
                 .then(() => {
                     card.removeCard();
-                    popupWithConfirmation.close();
+                    confirmationPopup.close();
                 })
                 .catch((err) => {
                     console.error(`Произошла ошибка: ${err}`);
@@ -97,7 +97,7 @@ const popupWithConfirmation = new PopupWithConfirmation(popupConfirmationDelete,
     }
 );
 
-popupWithConfirmation.setEventListeners();
+confirmationPopup.setEventListeners();
 
 const formValidators = {}
 
@@ -120,6 +120,7 @@ const userInfo = new UserInfo({
     userAvatarSelector: '.profile__avatar'
 })
 
+// универсальная функция для изменения текста кнопки сабмита, отлова ошибок и закрытия попапа 
 function handleSubmit(request, popupInstance, loadingText = "Сохранение...") {
     popupInstance.renderLoading(true, loadingText);
     request()
@@ -223,5 +224,5 @@ api.getAllInfo()
         cardSection.renderItems(cardArray);
     })
     .catch((err) => {
-        console.error(`${err}`);
+        console.error(`Произошла ошибка: ${err}`)
     })

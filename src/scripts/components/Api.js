@@ -2,7 +2,6 @@ export default class Api {
     constructor(config) {
         this._url = config.url;
         this._headers = config.headers;
-        //this._options = config.options
     }
 
     _onResponse(res) {
@@ -25,12 +24,6 @@ export default class Api {
             headers: this._headers
         })
     }
-    //     return fetch(`/users/me`, {
-    //         method: 'GET',
-    //         headers: this._headers
-    //     })
-    //         .then(this._onResponse)
-    // }
 
     getInitialCards() {
         return this._request(`/cards`, {
@@ -38,13 +31,6 @@ export default class Api {
             headers: this._headers
         })
     }
-    //     return fetch(`${this._url}/cards`, {
-    //         method: 'GET',
-    //                 headers: this._headers
-    //     })
-    //         .then(this._onResponse)
-    // }
-
 
     getAllInfo() {
         return Promise.all([this.getUserInfo(), this.getInitialCards()])
@@ -56,12 +42,6 @@ export default class Api {
             headers: this._headers,
             body: JSON.stringify(dataCard)
         })
-        // return fetch(`${this._url}/cards`, {
-        //     method: 'POST',
-        //     headers: this._headers,
-        //     body: JSON.stringify(dataCard)
-        // })
-        //     .then(this._onResponse)
     }
 
     removeCard(cardId) {
@@ -70,11 +50,6 @@ export default class Api {
             method: 'DELETE',
             headers: this._headers
         })
-        // return fetch(`${this._url}/cards/${cardId}`, {
-        //     method: 'DELETE',
-        //     headers: this._headers
-        // })
-        //     .then(this._onResponse)
     }
 
     swapLike(cardId, statusIsLiked) {
@@ -82,29 +57,7 @@ export default class Api {
             method: statusIsLiked ? 'DELETE' : 'PUT',
             headers: this._headers
         })
-        // return fetch(`${this._url}/cards/${cardId}/likes`, {
-        //     method: statusIsLiked ? 'DELETE' : 'PUT',
-        //     headers: this._headers
-        // })
-        //     .then(this._onResponse)
     }
-
-    // addLike(cardId) {
-        
-    //     return fetch(`${this._url}/cards/${cardId}/likes`, {
-    //         method: 'PUT',
-    //         headers: this._headers
-    //     })
-    //         .then(this._onResponse)
-    // }
-
-    // removeLike(cardId) {
-    //     return fetch(`${this._url}/cards/${cardId}/likes`, {
-    //         method: 'DELETE',
-    //         headers: this._headers
-    //     })
-    //         .then(this._onResponse)
-    // }
 
     editUserInfo(data) {
         return this._request(`/users/me`, {
@@ -112,12 +65,6 @@ export default class Api {
             headers: this._headers,
             body: JSON.stringify(data)
         })
-        // return fetch(`${this._url}/users/me`, {
-        //     method: 'PATCH',
-        //     headers: this._headers,
-        //     body: JSON.stringify(data)
-        // })
-        //     .then(this._onResponse)
     }
 
     editAvatarPhoto(data) {
@@ -126,12 +73,5 @@ export default class Api {
             headers: this._headers,
             body: JSON.stringify(data)
         })
-        // return fetch(`${this._url}/users/me/avatar`, {
-        //     method: 'PATCH',
-        //     headers: this._headers,
-        //     body: JSON.stringify(data)
-        // })
-        //     .then(this._onResponse)
     }
-
 }
