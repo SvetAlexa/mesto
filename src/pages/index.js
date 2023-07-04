@@ -58,7 +58,9 @@ function createCard(item, templateSelector) {
                     .then(cardData => {
                         instance.setDataLikes(cardData)
                     })
-                    .catch(console.error)
+                    .catch((err) => {
+                        console.error(`Произошла ошибка: ${err}`);
+                    })
             }
         },
         templateSelector)
@@ -83,13 +85,14 @@ popupWithImage.setEventListeners();
 const popupWithConfirmation = new PopupWithConfirmation(popupConfirmationDelete,
     {
         handleConfirmationDelete: (card) => {
-            console.log(card)
             api.removeCard(card.data._id)
                 .then(() => {
                     card.removeCard();
                     popupWithConfirmation.close();
                 })
-                .catch(console.error)
+                .catch((err) => {
+                    console.error(`Произошла ошибка: ${err}`);
+                })
         },
     }
 );
@@ -99,14 +102,14 @@ popupWithConfirmation.setEventListeners();
 const formValidators = {}
 
 const enableValidation = (config) => {
-  const formList = Array.from(document.querySelectorAll(config.formSelector))
-  formList.forEach((formElement) => {
-    const validator = new FormValidator(config, formElement)
+    const formList = Array.from(document.querySelectorAll(config.formSelector))
+    formList.forEach((formElement) => {
+        const validator = new FormValidator(config, formElement)
 
-    const formName = formElement.getAttribute('name')
-    formValidators[formName] = validator; //записываем в объект формы под именем
-    validator.enableValidation();
-  });
+        const formName = formElement.getAttribute('name')
+        formValidators[formName] = validator; //записываем в объект формы под именем
+        validator.enableValidation();
+    });
 };
 
 enableValidation(configFormSelector); //создаем экземпляры валидаторов всех форм
@@ -117,91 +120,108 @@ const userInfo = new UserInfo({
     userAvatarSelector: '.profile__avatar'
 })
 
-const formNewCard = new PopupWithForm({
+function handleSubmit(request, popupInstance, loadingText = "Сохранение...") {
+    popupInstance.renderLoading(true, loadingText);
+    request()
+        .then(() => {
+            popupInstance.close()
+        })
+        .catch((err) => {
+            console.error(`Произошла ошибка: ${err}`);
+        })
+        .finally(() => {
+            popupInstance.renderLoading(false);
+        });
+}
+
+function handleNewCardFormSubmit(data) {
+    function makeRequest() {
+        return api.createNewCard(data)
+            .then((cardData) => {
+                cardSection.addItem(createCard(cardData, templateCardElement), 'prepend');
+            });
+    }
+    handleSubmit(makeRequest, newCardPopup);
+}
+
+const newCardPopup = new PopupWithForm({
     popupSelector: popupNewCard,
     handleSubmitForm: (data) => {
-        formNewCard.renderLoading(true);
-        api.createNewCard(data)
-            .then(function (dataFromServer) {
-                cardSection.addItem(createCard(dataFromServer, templateCardElement), 'prepend');
-                formNewCard.close();
-            })
-            .catch(console.error)
-            .finally(() => {
-                formNewCard.renderLoading(false);
-            })
+        handleNewCardFormSubmit(data);
     }
 })
 
-formNewCard.setEventListeners();
+newCardPopup.setEventListeners();
 
 //слушатель кнопки добавления новой карточки
 buttonAddNewCard.addEventListener('click', function (evt) {
     formValidators['new-card-form'].cleanErrorMessage();
-    formNewCard.open();
+    newCardPopup.open();
     formValidators['new-card-form'].disabledButton();
 });
 
-const formProfileInfo = new PopupWithForm({
+function handleProfileFormSubmit(data) {
+    function makeRequest() {
+        return api.editUserInfo(data)
+            .then((userData) => {
+                userInfo.setUserInfo(userData);
+            });
+    }
+    handleSubmit(makeRequest, profilePopup);
+}
+
+const profilePopup = new PopupWithForm({
     popupSelector: popupProfileInfo,
     handleSubmitForm: (data) => {
-        data.name = data.user
-        formProfileInfo.renderLoading(true);
-        api.editUserInfo(data)
-            .then(function (dataFromServer) {
-                userInfo.setUserInfo(dataFromServer);
-                formProfileInfo.close();
-            })
-            .catch(console.error)
-            .finally(() => {
-                formProfileInfo.renderLoading(false);
-            })
+        data.name = data.user;
+        handleProfileFormSubmit(data);
     }
 })
 
-formProfileInfo.setEventListeners();
+profilePopup.setEventListeners();
 
 
 //слушатель кнопки редактирования профиля
-buttonEditProfileInfo.addEventListener('click', function (evt) {
+buttonEditProfileInfo.addEventListener('click', function () {
     formValidators['profile-form'].cleanErrorMessage()
-    formProfileInfo.open();
-    formProfileInfo.setInputValues(userInfo.getUserInfo());
+    profilePopup.open();
+    profilePopup.setInputValues(userInfo.getUserInfo());
     formValidators['profile-form'].enabledButton();
 });
 
-const formUpdatedAvatar = new PopupWithForm({
+function handleAvatarFormSubmit(data) {
+    function makeRequest() {
+        return api.editAvatarPhoto(data)
+            .then((userData) => {
+                userInfo.setUserInfo(userData);
+            });
+    }
+    handleSubmit(makeRequest, avatarPopup);
+}
+
+const avatarPopup = new PopupWithForm({
     popupSelector: popupProfileAvatar,
     handleSubmitForm: (data) => {
-        formUpdatedAvatar.renderLoading(true);
-        api.editAvatarPhoto(data)
-            .then(function (dataFromServer) {
-                userInfo.setUserInfo(dataFromServer);
-                formUpdatedAvatar.close();
-            })
-            .catch(console.error)
-            .finally(() => {
-                formUpdatedAvatar.renderLoading(false);
-            })
+        handleAvatarFormSubmit(data);
     }
 })
 
-formUpdatedAvatar.setEventListeners();
+avatarPopup.setEventListeners();
 
 //слушатель кнопки редактирования аватара
 buttonEditAvatarPhoto.addEventListener('click', () => {
     formValidators['avatar-form'].cleanErrorMessage()
-    formUpdatedAvatar.open();
-    formUpdatedAvatar.setInputValues(userInfo.getAvatarInfo());
+    avatarPopup.open();
+    avatarPopup.setInputValues(userInfo.getAvatarInfo());
     formValidators['avatar-form'].enabledButton();
 })
 
 api.getAllInfo()
     .then(([userData, cardArray]) => {
         userInfo.setUserInfo(userData);
-        console.log(userData);
-        console.log(cardArray);
         userId = userData._id;
         cardSection.renderItems(cardArray);
     })
-    .catch(console.error)
+    .catch((err) => {
+        console.error(`${err}`);
+    })

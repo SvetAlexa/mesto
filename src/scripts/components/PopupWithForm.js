@@ -16,17 +16,13 @@ export default class PopupWithForm extends Popup {
         this._formElement.reset();
     }
 
-    renderLoading(isLoading, loadingText = 'Сохранение...') {
+    renderLoading(isLoading, loadingText) {
         if (isLoading) {
-          this._buttonSubmit.textContent = loadingText;
+            this._buttonSubmit.textContent = loadingText;
         } else {
-          this._buttonSubmit.textContent = this._buttonSubmitText;
+            this._buttonSubmit.textContent = this._buttonSubmitText;
         }
-      }
-
-    // swapButtonSubmitText(text) {
-    //     this._buttonSubmit.textContent = text;
-    // }
+    }
 
     _getInputValues() {
         const formValues = {};
