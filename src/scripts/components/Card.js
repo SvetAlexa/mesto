@@ -2,7 +2,7 @@ import defaultImage from '../../images/defaultImage.jpg'
 
 export default class Card {
     constructor({ data, userId, handleErrorImage, handleImageClick, handleRemoveButtonClick, handleLikeClick }, templateSelector) {
-        this._data = data;
+        this.data = data;
         this._name = data.name;
         this._link = data.link;
         this._userId = userId;
@@ -45,13 +45,13 @@ export default class Card {
     }
 
     isLiked() {
-        return this._data.likes.some((item) => {
+        return this.data.likes.some((item) => {
             return item._id === this._userId;
         })
     }
 
     _updateLikeCounter() {
-        this._cardLikeCounter.textContent = this._data.likes.length;
+        this._cardLikeCounter.textContent = this.data.likes.length;
 
         if (this.isLiked()) {
             this._likeButton.classList.add('element__likes_is_active');
@@ -61,7 +61,7 @@ export default class Card {
     }
 
     setDataLikes(data) {
-        this._data.likes = data.likes;
+        this.data.likes = data.likes;
         this._updateLikeCounter();
     }
 
@@ -85,11 +85,11 @@ export default class Card {
     }
 
     getCardId() {
-        return this._data._id;
+        return this.data._id;
     }
 
     checkUserId() {
-        return (this._userId === this._data.owner._id)
+        return (this._userId === this.data.owner._id)
     }
 
     swapTrashButton(status) {

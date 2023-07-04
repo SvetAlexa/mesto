@@ -58,9 +58,7 @@ function createCard(item, templateSelector) {
                     .then(cardData => {
                         instance.setDataLikes(cardData)
                     })
-                    .catch((err) => {
-                        console.log('Произошла ошибка', err)
-                    })
+                    .catch(console.error)
             }
         },
         templateSelector)
@@ -85,24 +83,33 @@ popupWithImage.setEventListeners();
 const popupWithConfirmation = new PopupWithConfirmation(popupConfirmationDelete,
     {
         handleConfirmationDelete: (card) => {
-            api.removeCard(card._data._id)
-                .then(() => card.removeCard())
-                .catch((err) => {
-                    console.log('Произошла ошибка', err)
+            console.log(card)
+            api.removeCard(card.data._id)
+                .then(() => {
+                    card.removeCard();
+                    popupWithConfirmation.close();
                 })
+                .catch(console.error)
         },
     }
 );
 
 popupWithConfirmation.setEventListeners();
 
-const formNewCardValidation = new FormValidator(configFormSelector, formPopupNewCard);
-const formProfileInfoValidation = new FormValidator(configFormSelector, formPopupProfileInfo);
-const formProfileAvatarValidation = new FormValidator(configFormSelector, formPopupAvatarPhoto);
+const formValidators = {}
 
-formNewCardValidation.enableValidation();
-formProfileInfoValidation.enableValidation();
-formProfileAvatarValidation.enableValidation();
+const enableValidation = (config) => {
+  const formList = Array.from(document.querySelectorAll(config.formSelector))
+  formList.forEach((formElement) => {
+    const validator = new FormValidator(config, formElement)
+
+    const formName = formElement.getAttribute('name')
+    formValidators[formName] = validator; //записываем в объект формы под именем
+    validator.enableValidation();
+  });
+};
+
+enableValidation(configFormSelector); //создаем экземпляры валидаторов всех форм
 
 const userInfo = new UserInfo({
     userNameSelector: '.profile__name',
@@ -113,16 +120,15 @@ const userInfo = new UserInfo({
 const formNewCard = new PopupWithForm({
     popupSelector: popupNewCard,
     handleSubmitForm: (data) => {
-        formNewCard.swapButtonSubmitText('Сохранение...');
+        formNewCard.renderLoading(true);
         api.createNewCard(data)
             .then(function (dataFromServer) {
                 cardSection.addItem(createCard(dataFromServer, templateCardElement), 'prepend');
+                formNewCard.close();
             })
-            .catch((err) => {
-                console.log('Произошла ошибка', err);
-            })
+            .catch(console.error)
             .finally(() => {
-                formNewCard.swapButtonSubmitText('Создать');
+                formNewCard.renderLoading(false);
             })
     }
 })
@@ -131,25 +137,24 @@ formNewCard.setEventListeners();
 
 //слушатель кнопки добавления новой карточки
 buttonAddNewCard.addEventListener('click', function (evt) {
-    formNewCardValidation.cleanErrorMessage();
+    formValidators['new-card-form'].cleanErrorMessage();
     formNewCard.open();
-    formNewCardValidation.disabledButton();
+    formValidators['new-card-form'].disabledButton();
 });
 
 const formProfileInfo = new PopupWithForm({
     popupSelector: popupProfileInfo,
     handleSubmitForm: (data) => {
         data.name = data.user
-        formProfileInfo.swapButtonSubmitText('Сохранение...');
+        formProfileInfo.renderLoading(true);
         api.editUserInfo(data)
             .then(function (dataFromServer) {
                 userInfo.setUserInfo(dataFromServer);
+                formProfileInfo.close();
             })
-            .catch((err) => {
-                console.log('Произошла ошибка', err);
-            })
+            .catch(console.error)
             .finally(() => {
-                formProfileInfo.swapButtonSubmitText('Сохранить');
+                formProfileInfo.renderLoading(false);
             })
     }
 })
@@ -159,25 +164,24 @@ formProfileInfo.setEventListeners();
 
 //слушатель кнопки редактирования профиля
 buttonEditProfileInfo.addEventListener('click', function (evt) {
-    formProfileInfoValidation.cleanErrorMessage()
+    formValidators['profile-form'].cleanErrorMessage()
     formProfileInfo.open();
     formProfileInfo.setInputValues(userInfo.getUserInfo());
-    formProfileInfoValidation.enabledButton();
+    formValidators['profile-form'].enabledButton();
 });
 
 const formUpdatedAvatar = new PopupWithForm({
     popupSelector: popupProfileAvatar,
     handleSubmitForm: (data) => {
-        formUpdatedAvatar.swapButtonSubmitText('Сохранение...');
+        formUpdatedAvatar.renderLoading(true);
         api.editAvatarPhoto(data)
             .then(function (dataFromServer) {
-                userInfo.setAvatarImage(dataFromServer);
+                userInfo.setUserInfo(dataFromServer);
+                formUpdatedAvatar.close();
             })
-            .catch((err) => {
-                console.log('Произошла ошибка', err);
-            })
+            .catch(console.error)
             .finally(() => {
-                formUpdatedAvatar.swapButtonSubmitText('Сохранить');
+                formUpdatedAvatar.renderLoading(false);
             })
     }
 })
@@ -186,19 +190,18 @@ formUpdatedAvatar.setEventListeners();
 
 //слушатель кнопки редактирования аватара
 buttonEditAvatarPhoto.addEventListener('click', () => {
-    formProfileAvatarValidation.cleanErrorMessage()
+    formValidators['avatar-form'].cleanErrorMessage()
     formUpdatedAvatar.open();
     formUpdatedAvatar.setInputValues(userInfo.getAvatarInfo());
-    formProfileAvatarValidation.enabledButton();
+    formValidators['avatar-form'].enabledButton();
 })
 
 api.getAllInfo()
     .then(([userData, cardArray]) => {
         userInfo.setUserInfo(userData);
-        userInfo.setAvatarImage(userData);
+        console.log(userData);
+        console.log(cardArray);
         userId = userData._id;
         cardSection.renderItems(cardArray);
     })
-    .catch((err) => {
-        console.log('Произошла ошибка', err);
-    })
+    .catch(console.error)

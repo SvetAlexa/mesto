@@ -5,9 +5,10 @@ export default class PopupWithForm extends Popup {
         super(popupSelector);
         this._handleSubmitForm = handleSubmitForm;
 
-        this._formElement = this._popupSelector.querySelector('.popup__form');
-        this._inputList = this._popupSelector.querySelectorAll('.popup__input');
-        this._buttonSubmit = this._popupSelector.querySelector('.popup__button-sumbit');
+        this._formElement = this._popupElement.querySelector('.popup__form');
+        this._inputList = this._popupElement.querySelectorAll('.popup__input');
+        this._buttonSubmit = this._popupElement.querySelector('.popup__button-sumbit');
+        this._buttonSubmitText = this._buttonSubmit.textContent;
     }
 
     close() {
@@ -15,9 +16,17 @@ export default class PopupWithForm extends Popup {
         this._formElement.reset();
     }
 
-    swapButtonSubmitText(text) {
-        this._buttonSubmit.textContent = text;
-    }
+    renderLoading(isLoading, loadingText = 'Сохранение...') {
+        if (isLoading) {
+          this._buttonSubmit.textContent = loadingText;
+        } else {
+          this._buttonSubmit.textContent = this._buttonSubmitText;
+        }
+      }
+
+    // swapButtonSubmitText(text) {
+    //     this._buttonSubmit.textContent = text;
+    // }
 
     _getInputValues() {
         const formValues = {};
@@ -41,7 +50,6 @@ export default class PopupWithForm extends Popup {
         this._formElement.addEventListener('submit', (evt) => {
             evt.preventDefault();
             this._handleSubmitForm(this._getInputValues());
-            this.close();
         });
 
     }

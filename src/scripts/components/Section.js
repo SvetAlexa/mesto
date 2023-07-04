@@ -17,10 +17,6 @@ export default class Section {
     }
 
     renderItems(cardsArray) {
-        cardsArray.forEach((item) => {
-            this._renderer(item)
-        });
+        cardsArray.forEach(this._renderer);
     }
-
-
 }

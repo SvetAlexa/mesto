@@ -8,10 +8,19 @@ export default class Api {
         if (res.ok) {
             return res.json();
         }
-        return Promise.reject(`${res.status}`);
+        return Promise.reject(`Произошла ошибка ${res.status}`);
     }
 
+    // _request(url, options) {
+    //     return fetch(`${this._url}${url}`, {
+    //         method: options,
+    //         headers: this._headers
+    //     })
+    //     .then(this._onResponse)
+    // }
+
     getUserInfo() {
+        // this._request(`/users/me`, 'GET')
         return fetch(`${this._url}/users/me`, {
             method: 'GET',
             headers: this._headers
@@ -42,6 +51,7 @@ export default class Api {
     }
 
     removeCard(cardId) {
+        // this._request(`/cards/${cardId}`, 'DELETE')
         return fetch(`${this._url}/cards/${cardId}`, {
             method: 'DELETE',
             headers: this._headers
