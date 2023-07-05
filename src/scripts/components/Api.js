@@ -45,7 +45,6 @@ export default class Api {
     }
 
     removeCard(cardId) {
-        // this._request(`/cards/${cardId}`, 'DELETE')
         return this._request(`/cards/${cardId}`, {
             method: 'DELETE',
             headers: this._headers
