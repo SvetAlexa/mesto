@@ -24,7 +24,7 @@
 * Настроены HTTP-запросы к удаленному серверу
 
 ## Запуск проекта
-* склонировать репозиторий ```git clone git@github.com:SvetAlexa/mesto.git```
+* склонировать репозиторий из ветки main ```git clone git@github.com:SvetAlexa/mesto.git```
 * перейти в папку проекта ```cd mesto```
 * установить зависимости ```npm install```
 * запустить в режиме разработки ```npm run dev```
